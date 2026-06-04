@@ -1,0 +1,9 @@
+{
+  "ref": {"form": "ref", "n_phases": 46783, "mean_len": 42.372442981424875, "alpha_tpl": 1.3238560736101146, "alpha_pl": 1.497275107324715, "xmin": 2.0, "secs": 310.7},
+  "softmin": {"form": "softmin", "n_phases": 58037, "mean_len": 43.133759498251116, "alpha_tpl": 1.2963448648741447, "alpha_pl": 1.4860212905059642, "xmin": 2.0, "secs": 352.8},
+  "bo": {"form": "bo", "n_phases": 182769, "mean_len": 5.085304400636869, "alpha_tpl": 1.583707013733508, "alpha_pl": 2.8463716490595017, "xmin": 10.0, "secs": 115.2},
+  "noise": {"form": "noise", "n_phases": 25880, "mean_len": 6.154173106646058, "alpha_tpl": 1.5168461665415989, "alpha_pl": 2.957113462497367, "xmin": 17.0, "secs": 318.7},
+  "blend": {"form": "blend", "n_phases": 44772, "mean_len": 44.144219601536676, "alpha_tpl": 1.340481146531275, "alpha_pl": 1.5263086068907117, "xmin": 3.0, "secs": 319.1},
+  "bottom2": {"form": "bottom2", "n_phases": 39023, "mean_len": 24.033441816364707, "alpha_tpl": 1.1804175836596267, "alpha_pl": 1.5185833123977024, "xmin": 2.0, "secs": 322.8},
+  "cadence": {"form": "cadence", "n_phases": 45115, "mean_len": 34.42023717167239, "alpha_tpl": 1.339601390869439, "alpha_pl": 1.5212042213324408, "xmin": 2.0, "secs": 305.8}
+}

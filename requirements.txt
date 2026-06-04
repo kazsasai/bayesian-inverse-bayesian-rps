@@ -1,0 +1,15 @@
+# Python dependencies for Paper A figure/data reproduction.
+# Verified working with Python 3.13.9 on the versions pinned below
+# (2026-06; the figure and analysis scripts use only these four packages).
+#
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# Data: extract the Zenodo figure-only archive and point $PAPERA_DATA at it
+# (see BUILD_NOTES.md / the Zenodo README), then run
+#   python BIB_Levy_v2/latex/figures/scripts/build_all.py
+
+numpy==2.3.5
+scipy==1.17.0
+matplotlib==3.10.8
+powerlaw==2.0.0

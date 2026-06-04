@@ -1,0 +1,90 @@
+# =============================================================================
+#  .gitignore — Paper A (BIB / Lévy persistence) source repository
+#
+#  Committed tree is source-only. Large simulation data lives on Zenodo
+#  (see zenodo_data_manifest.txt). Local data trees, archives, and
+#  superseded experiments are excluded.
+# =============================================================================
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# --- LaTeX build artifacts ---
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+# Keep PDFs (main_PRE_v2.pdf is intentionally committed)
+
+# --- Claude Code workspace (user-local) ---
+.claude/
+
+# --- Large simulation data trees (live on Zenodo, see manifest) ---
+simulation/*/data/
+simulation/data/
+simulation/files/
+simulation/files.zip
+simulation_tie_mode_ablation/data/
+
+# --- Data archives & split-parts ---
+simulation/**/*.tar.gz
+simulation/**/*.tar.gz.*
+simulation/reward_huge/-9
+
+# --- Superseded experiments (not part of release) ---
+simulation_r2/
+simulation_r3_JM0.10/
+simulation_r4_fallback/
+_archive/
+BIB_Levy研究 (1)/
+
+# --- One-off log files at top level ---
+/eq2chk.log
+/texput.log
+
+# --- Brockbank & Vul raw data (fetched on demand via fetch_bv_data.sh, ~115 MB) ---
+pnas_si/figures/_bv_rps_repo/
+pnas_si/figures/rps/
+
+# --- Extracted Zenodo data / archives (kept outside the repo; see README) ---
+/data/
+*.tar.gz
+papera_data/
+
+# --- Local figure / cache backups ---
+*.orig
+
+# --- Manuscript & journal template material (kept in the private submission
+#     tree, not in this figure-reproduction repo) ---
+pnas/*.cls
+pnas/*.bst
+pnas/*.sty
+pnas/*.ldf
+pnas_si/*.cls
+pnas_si/*.bst
+pnas_si/*.sty
+pnas_si/*.ldf
+**/PNAS-template-main.*
+**/cover_letter*

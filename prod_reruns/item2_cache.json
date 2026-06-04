@@ -1,0 +1,5 @@
+{
+  "sir": {"method": "sir", "n_phases": 0, "mean_len": 0.0, "alpha_tpl": null, "frac_high": null, "secs": 118.5},
+  "bib": {"method": "bib", "n_phases": 47601, "mean_len": 40.54488351085061, "alpha_tpl": 1.3244552726800811, "secs": 307.1},
+  "restart": {"method": "restart", "n_phases": 32867, "mean_len": 5.576048924453099, "alpha_tpl": 1.3504043544782691, "secs": 126.0}
+}
