@@ -125,17 +125,21 @@ def main():
              fontsize=12, fontweight="bold", va="bottom", ha="left")
 
     # ---- Panel B: tau d^2 collapse (d > 0) ----
+    # Only show the scaling regime tau >= XMIN_B: at the very smallest tau the
+    # discrete startup (P~1, so P*tau^{1/2}~tau^{1/2}) makes a small upward kink
+    # before the plateau; dropping it leaves the clean collapse.
+    XMIN_B = 12
     for d, col in zip(DRIFTS, colors):
         if d == 0.0:
             continue
         g, c, _ = results[d]
-        m = c > 0
+        m = (c > 0) & (g >= XMIN_B)
         axB.loglog(g[m] * d ** 2, c[m] * np.sqrt(g[m]), color=col, label=f"$d={d:g}$")
     axB.set_xlabel(r"Scaled time  $\tau d^{2}$")
     axB.set_ylabel(r"$P(T \geq \tau)\,\tau^{1/2}$")
     axB.legend(loc="upper left", frameon=False, fontsize=7.5)
-    axB.text(0.30, 0.10, r"collapse onto a single" "\n" r"scaling function $G(\tau d^{2})$",
-             transform=axB.transAxes, fontsize=8, va="bottom", ha="left")
+    axB.text(0.97, 0.05, r"collapse onto a single" "\n" r"scaling function $G(\tau d^{2})$",
+             transform=axB.transAxes, fontsize=8, va="bottom", ha="right")
     axB.text(-0.16, 1.02, "B", transform=axB.transAxes,
              fontsize=12, fontweight="bold", va="bottom", ha="left")
 
