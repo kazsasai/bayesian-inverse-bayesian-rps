@@ -28,6 +28,14 @@ simulation_tie_mode_ablation/data/                ~1.5 G Fig 3, 8       simulati
 --------------------------------------------------------------------------------------------------
 TOTAL (full simulation data)                      ~16 G
 
+Separate archive — RL-baseline control (paperA_data_baseline_control.tar.gz, ~21 M):
+pnas_rl_comparison/data/baseline_dwells.npz       ~22 M  SI Fig. S8     pnas_rl_comparison/run_baseline_control.py
+   WSLS / tabular Q-learning / regret matching vs BIB; pooled argmax + action
+   run lengths, 40 seeds, T = 2e5. NOTE: this archive carries the
+   pnas_rl_comparison/data/... path and extracts at the REPOSITORY ROOT, not at
+   <repo>/data/. build_fig_control.py reads it directly from the repo path; the
+   figure's BIB curves still come from reward_huge_* in the main archives.
+
 Bundled in the GitHub repo (NOT on Zenodo; already self-contained):
    figures/scripts/data/scheme_summary.csv                Fig 8
    figures/scripts/data/bo_tournament_results.json        Fig 9
