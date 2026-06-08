@@ -1,0 +1,183 @@
+{
+  "T": 200000,
+  "n_seeds": 40,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "methods": [
+    "WSLS",
+    "Qlearning",
+    "RegretMatching"
+  ],
+  "opponents": [
+    "random",
+    "self_play",
+    "fixed_biased"
+  ],
+  "harness": "rps_baselines.run_pair_objs (mirrors rpsgame_reward.run_pair); HANDS/rps imported from rpsgame_reward (identical encoding)",
+  "observables": {
+    "__argmax": "consecutive_runs(argmax1) [+argmax2 self-play]; RM=argmax regret, Q/WSLS=played action",
+    "__action": "consecutive_runs(h1) [+h2 self-play]; played action"
+  },
+  "pooling": "self-play pools both agents; vs non-learning opponent agent-1 only",
+  "params": {
+    "WSLS": "deterministic win-stay/lose-or-tie-shift to BR",
+    "Qlearning": "tabular recall-1; lr=0.1 gamma=0.9 eps=0.1",
+    "RegretMatching": "vanilla; sigma=R+/sum R+; argmax cumulative regret"
+  },
+  "biased_p": [
+    0.6,
+    0.2,
+    0.2
+  ],
+  "elapsed_sec": 524.5,
+  "summary": [
+    {
+      "key": "WSLS__random__argmax",
+      "n": 5332961,
+      "max": 18,
+      "mean": 1.5
+    },
+    {
+      "key": "WSLS__random__action",
+      "n": 5332961,
+      "max": 18,
+      "mean": 1.5
+    },
+    {
+      "key": "Qlearning__random__argmax",
+      "n": 5504688,
+      "max": 138,
+      "mean": 1.45
+    },
+    {
+      "key": "Qlearning__random__action",
+      "n": 5504688,
+      "max": 138,
+      "mean": 1.45
+    },
+    {
+      "key": "RegretMatching__random__argmax",
+      "n": 22254,
+      "max": 187156,
+      "mean": 359.49
+    },
+    {
+      "key": "RegretMatching__random__action",
+      "n": 2118955,
+      "max": 176529,
+      "mean": 3.78
+    },
+    {
+      "key": "WSLS__self_play__argmax",
+      "n": 11400023,
+      "max": 2,
+      "mean": 1.4
+    },
+    {
+      "key": "WSLS__self_play__action",
+      "n": 11400023,
+      "max": 2,
+      "mean": 1.4
+    },
+    {
+      "key": "Qlearning__self_play__argmax",
+      "n": 10584157,
+      "max": 114,
+      "mean": 1.51
+    },
+    {
+      "key": "Qlearning__self_play__action",
+      "n": 10584157,
+      "max": 114,
+      "mean": 1.51
+    },
+    {
+      "key": "RegretMatching__self_play__argmax",
+      "n": 37194,
+      "max": 3151,
+      "mean": 430.18
+    },
+    {
+      "key": "RegretMatching__self_play__action",
+      "n": 3990124,
+      "max": 2467,
+      "mean": 4.01
+    },
+    {
+      "key": "WSLS__fixed_biased__argmax",
+      "n": 4478725,
+      "max": 34,
+      "mean": 1.79
+    },
+    {
+      "key": "WSLS__fixed_biased__action",
+      "n": 4478725,
+      "max": 34,
+      "mean": 1.79
+    },
+    {
+      "key": "Qlearning__fixed_biased__argmax",
+      "n": 1909990,
+      "max": 183,
+      "mean": 4.19
+    },
+    {
+      "key": "Qlearning__fixed_biased__action",
+      "n": 1909990,
+      "max": 183,
+      "mean": 4.19
+    },
+    {
+      "key": "RegretMatching__fixed_biased__argmax",
+      "n": 143,
+      "max": 199999,
+      "mean": 55944.06
+    },
+    {
+      "key": "RegretMatching__fixed_biased__action",
+      "n": 220,
+      "max": 199999,
+      "mean": 36363.64
+    }
+  ]
+}

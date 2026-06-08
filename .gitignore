@@ -47,6 +47,9 @@ simulation/data/
 simulation/files/
 simulation/files.zip
 simulation_tie_mode_ablation/data/
+# RL-baseline pooled dwell cache (22 MB; regenerable via
+# pnas_rl_comparison/run_baseline_control.py, else fetched from Zenodo).
+pnas_rl_comparison/data/baseline_dwells.npz
 
 # --- Data archives & split-parts ---
 simulation/**/*.tar.gz

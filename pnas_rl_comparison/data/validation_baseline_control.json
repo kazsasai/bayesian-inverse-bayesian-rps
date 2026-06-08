@@ -1,0 +1,403 @@
+{
+  "bib_dir": "/Users/kazuto/paperA_data_full/simulation/reward_huge/data",
+  "baseline": "baseline_dwells.npz",
+  "method_note": "CSN xmin + Akaike over {PL,TPL,EXP,lognormal,stretched-exp}; TPL-interior basis; verdict needs heavy-tail-preferred + >=2 decades + gap<=0.2",
+  "bib_pooling": "bib-bib pools T_argmax1+T_argmax2; bib-random T_argmax1 ONLY (opponent side degenerate)",
+  "rows": [
+    {
+      "method": "BIB",
+      "opponent": "uniform-random",
+      "observable": "argmax-hyp",
+      "n": 154865,
+      "max": 6580,
+      "best": "TPL",
+      "alpha_TPL": 1.446,
+      "alpha_PL": 1.6,
+      "gap": 0.154,
+      "alpha_TPL_CI95": [
+        1.432,
+        1.455
+      ],
+      "xmin": 7,
+      "xmax": 6580,
+      "decades": 2.97,
+      "n_tail": 62848,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 1.0,
+        "LOGN": 0.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 98.88,
+      "R_TPLvsSTR": 24.58,
+      "R_TPLvsLOGN": 28.51,
+      "R_PLvsEXP": 89.35,
+      "verdict": "CRITICAL (3/2-class)"
+    },
+    {
+      "method": "BIB",
+      "opponent": "self-play",
+      "observable": "argmax-hyp",
+      "n": 358225,
+      "max": 7105,
+      "best": "TPL",
+      "alpha_TPL": 1.43,
+      "alpha_PL": 1.588,
+      "gap": 0.157,
+      "alpha_TPL_CI95": [
+        1.435,
+        1.456
+      ],
+      "xmin": 5,
+      "xmax": 7105,
+      "decades": 3.15,
+      "n_tail": 172090,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 1.0,
+        "LOGN": 0.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 156.68,
+      "R_TPLvsSTR": 33.79,
+      "R_TPLvsLOGN": 40.46,
+      "R_PLvsEXP": 141.03,
+      "verdict": "CRITICAL (3/2-class)"
+    },
+    {
+      "method": "RegretMatching",
+      "opponent": "uniform-random",
+      "observable": "argmax-regret",
+      "n": 22254,
+      "max": 187156,
+      "best": "TPL",
+      "alpha_TPL": 1.505,
+      "alpha_PL": 1.56,
+      "gap": 0.055,
+      "alpha_TPL_CI95": [
+        1.477,
+        1.536
+      ],
+      "xmin": 77,
+      "xmax": 187156,
+      "decades": 3.39,
+      "n_tail": 2104,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 1.0,
+        "LOGN": 0.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 22.07,
+      "R_TPLvsSTR": 4.91,
+      "R_TPLvsLOGN": 6.77,
+      "R_PLvsEXP": 21.59,
+      "verdict": "CRITICAL (3/2-class)"
+    },
+    {
+      "method": "RegretMatching",
+      "opponent": "self-play",
+      "observable": "argmax-regret",
+      "n": 37194,
+      "max": 3151,
+      "best": "LOGN",
+      "alpha_TPL": 0.0,
+      "alpha_PL": 2.995,
+      "gap": 2.995,
+      "alpha_TPL_CI95": [
+        0.0,
+        0.0
+      ],
+      "xmin": 549,
+      "xmax": 3151,
+      "decades": 0.76,
+      "n_tail": 12024,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 0.0,
+        "LOGN": 1.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": -0.27,
+      "R_TPLvsSTR": -9.73,
+      "R_TPLvsLOGN": -9.35,
+      "R_PLvsEXP": -47.56,
+      "verdict": "non-critical (LOGN)"
+    },
+    {
+      "method": "Qlearning",
+      "opponent": "uniform-random",
+      "observable": "action",
+      "n": 5504688,
+      "max": 138,
+      "n_fit": 400000,
+      "best": "LOGN",
+      "alpha_TPL": 2.384,
+      "alpha_PL": 2.732,
+      "gap": 0.349,
+      "alpha_TPL_CI95": [
+        2.281,
+        2.457
+      ],
+      "xmin": 1,
+      "xmax": 87,
+      "decades": 1.94,
+      "n_tail": 400000,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 0.0,
+        "LOGN": 1.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 46.69,
+      "R_TPLvsSTR": -18.04,
+      "R_TPLvsLOGN": -15.55,
+      "R_PLvsEXP": 39.56,
+      "verdict": "non-critical (LOGN)"
+    },
+    {
+      "method": "Qlearning",
+      "opponent": "self-play",
+      "observable": "action",
+      "n": 10584157,
+      "max": 114,
+      "n_fit": 400000,
+      "best": "LOGN",
+      "alpha_TPL": 2.934,
+      "alpha_PL": 2.934,
+      "gap": 0.0,
+      "alpha_TPL_CI95": [
+        2.874,
+        2.967
+      ],
+      "xmin": 1,
+      "xmax": 109,
+      "decades": 2.04,
+      "n_tail": 400000,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 0.0,
+        "LOGN": 1.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 98.37,
+      "R_TPLvsSTR": 46.86,
+      "R_TPLvsLOGN": -32.25,
+      "R_PLvsEXP": 98.37,
+      "verdict": "non-critical (LOGN)"
+    },
+    {
+      "method": "WSLS",
+      "opponent": "uniform-random",
+      "observable": "action",
+      "n": 5332961,
+      "max": 18,
+      "n_fit": 400000,
+      "best": "EXP",
+      "alpha_TPL": 0.014,
+      "alpha_PL": 2.493,
+      "gap": 2.48,
+      "alpha_TPL_CI95": [
+        0.0,
+        0.106
+      ],
+      "xmin": 1,
+      "xmax": 11,
+      "decades": 1.04,
+      "n_tail": 400000,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.454,
+        "TPL": 0.268,
+        "LOGN": 0.0,
+        "STREXP": 0.278
+      },
+      "R_TPLvsEXP": 0.49,
+      "R_TPLvsSTR": -0.35,
+      "R_TPLvsLOGN": 16.76,
+      "R_PLvsEXP": -136.23,
+      "verdict": "non-critical (exponential)"
+    },
+    {
+      "method": "WSLS",
+      "opponent": "self-play",
+      "observable": "action",
+      "n": 11400023,
+      "max": 2,
+      "verdict": "insufficient range"
+    },
+    {
+      "method": "WSLS",
+      "opponent": "self-play",
+      "observable": "action",
+      "n": 11400023,
+      "max": 2,
+      "verdict": "insufficient range"
+    },
+    {
+      "method": "WSLS",
+      "opponent": "fixed-biased",
+      "observable": "action",
+      "n": 4478725,
+      "max": 34,
+      "n_fit": 400000,
+      "best": "TPL",
+      "alpha_TPL": 1.224,
+      "alpha_PL": 2.807,
+      "gap": 1.583,
+      "alpha_TPL_CI95": [
+        1.154,
+        1.324
+      ],
+      "xmin": 2,
+      "xmax": 24,
+      "decades": 1.08,
+      "n_tail": 148833,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 1.0,
+        "LOGN": 0.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 27.43,
+      "R_TPLvsSTR": 16.93,
+      "R_TPLvsLOGN": 25.38,
+      "R_PLvsEXP": -24.72,
+      "verdict": "power-law-like but NOT robust (decades=1.1, gap=1.58)"
+    },
+    {
+      "method": "Qlearning",
+      "opponent": "self-play",
+      "observable": "action",
+      "n": 10584157,
+      "max": 114,
+      "n_fit": 400000,
+      "best": "LOGN",
+      "alpha_TPL": 2.934,
+      "alpha_PL": 2.934,
+      "gap": 0.0,
+      "alpha_TPL_CI95": [
+        2.874,
+        2.967
+      ],
+      "xmin": 1,
+      "xmax": 109,
+      "decades": 2.04,
+      "n_tail": 400000,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 0.0,
+        "LOGN": 1.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 98.37,
+      "R_TPLvsSTR": 46.86,
+      "R_TPLvsLOGN": -32.25,
+      "R_PLvsEXP": 98.37,
+      "verdict": "non-critical (LOGN)"
+    },
+    {
+      "method": "Qlearning",
+      "opponent": "fixed-biased",
+      "observable": "action",
+      "n": 1909990,
+      "max": 183,
+      "n_fit": 400000,
+      "best": "LOGN",
+      "alpha_TPL": 1.857,
+      "alpha_PL": 1.929,
+      "gap": 0.072,
+      "alpha_TPL_CI95": [
+        1.828,
+        1.861
+      ],
+      "xmin": 1,
+      "xmax": 173,
+      "decades": 2.24,
+      "n_tail": 400000,
+      "weights": {
+        "PL": 0.0,
+        "EXP": 0.0,
+        "TPL": 0.0,
+        "LOGN": 1.0,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 287.24,
+      "R_TPLvsSTR": -88.09,
+      "R_TPLvsLOGN": -43.77,
+      "R_PLvsEXP": 279.05,
+      "verdict": "non-critical (LOGN)"
+    },
+    {
+      "method": "RegretMatching",
+      "opponent": "self-play",
+      "observable": "action",
+      "n": 3990124,
+      "max": 2467,
+      "n_fit": 400000,
+      "best": "LOGN",
+      "alpha_TPL": 2.561,
+      "alpha_PL": 2.561,
+      "gap": 0.0,
+      "alpha_TPL_CI95": [
+        2.534,
+        2.579
+      ],
+      "xmin": 3,
+      "xmax": 2161,
+      "decades": 2.86,
+      "n_tail": 103488,
+      "weights": {
+        "PL": 0.144,
+        "EXP": 0.0,
+        "TPL": 0.053,
+        "LOGN": 0.803,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 62.18,
+      "R_TPLvsSTR": 35.39,
+      "R_TPLvsLOGN": -0.34,
+      "R_PLvsEXP": 62.18,
+      "verdict": "non-critical (LOGN)"
+    },
+    {
+      "method": "RegretMatching",
+      "opponent": "fixed-biased",
+      "observable": "action",
+      "n": 220,
+      "max": 199999,
+      "best": "LOGN",
+      "alpha_TPL": 1.319,
+      "alpha_PL": 1.328,
+      "gap": 0.009,
+      "alpha_TPL_CI95": [
+        1.242,
+        1.391
+      ],
+      "xmin": 1,
+      "xmax": 199999,
+      "decades": 5.3,
+      "n_tail": 220,
+      "weights": {
+        "PL": 0.001,
+        "EXP": 0.0,
+        "TPL": 0.001,
+        "LOGN": 0.998,
+        "STREXP": 0.0
+      },
+      "R_TPLvsEXP": 25.61,
+      "R_TPLvsSTR": 10.52,
+      "R_TPLvsLOGN": -7.37,
+      "R_PLvsEXP": 25.36,
+      "verdict": "non-critical (LOGN)"
+    }
+  ]
+}
