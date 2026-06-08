@@ -122,7 +122,7 @@ def main():
     axA.set_ylim(1e-4, 1.4)
     axA.legend(loc="lower left", frameon=False, fontsize=7.5, ncol=1)
     axA.text(-0.16, 1.02, "A", transform=axA.transAxes,
-             fontsize=12, fontweight="bold", va="bottom", ha="left")
+             fontsize=11, fontweight="bold", va="bottom", ha="left")
 
     # ---- Panel B: tau d^2 collapse (d > 0) ----
     # Only show the scaling regime tau >= XMIN_B: at the very smallest tau the
@@ -141,7 +141,7 @@ def main():
     axB.text(0.97, 0.05, r"collapse onto a single" "\n" r"scaling function $G(\tau d^{2})$",
              transform=axB.transAxes, fontsize=8, va="bottom", ha="right")
     axB.text(-0.16, 1.02, "B", transform=axB.transAxes,
-             fontsize=12, fontweight="bold", va="bottom", ha="left")
+             fontsize=11, fontweight="bold", va="bottom", ha="left")
 
     fig.tight_layout()
     fig.savefig(OUT_PDF, bbox_inches="tight")

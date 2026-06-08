@@ -71,7 +71,9 @@ Po, amo, _ = run("bo", "bo")
 # ---- compose: A on top, B | C below; A aligned to the B+C heatmap span ----
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 plt.rcParams.update({"font.size": 12, "axes.labelsize": 13, "axes.titlesize": 14,
-                     "font.family": "sans-serif"})
+                     "font.family": "sans-serif",
+                     "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
+                     "pdf.fonttype": 42, "ps.fonttype": 42})
 fig = plt.figure(figsize=(10, 10 / concept_aspect + 3.4))
 gs = fig.add_gridspec(2, 2, height_ratios=[10 / concept_aspect, 3.4],
                       left=0.075, right=0.965, top=0.975, bottom=0.11,
