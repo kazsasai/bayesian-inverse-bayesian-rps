@@ -120,7 +120,7 @@ axA.plot([], [], "--", color="#b2182b", lw=1.4, label=rf"TPL fit ($\alpha$={al_a
 plot_ccdf(axA, equil["hand_runs"], "#2166ac", "s", "hand-repeat (exp.)")
 plot_ccdf(axA, equil["win_streaks"], "#4d9221", "^", "win streaks (exp.)")
 axA.set_xlabel("run length"); axA.set_ylabel(r"CCDF  $P(X \geq x)$")
-axA.set_ylim(1e-5, 1.5); axA.legend(loc="upper right", frameon=False)
+axA.set_xlim(1, 3e4); axA.set_ylim(1e-5, 1.5); axA.legend(loc="upper right", frameon=False)
 panel_label(axA, "A")
 
 # ---- (B) biased opponent: hand-run exponential -> power law ----

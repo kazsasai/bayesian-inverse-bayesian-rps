@@ -130,9 +130,8 @@ def plot(cache):
             if r == 1:
                 ax.set_xlabel(r"$T_{\mathrm{argmax}}$ (steps)", fontsize=7.5)
     handles = [plt.Line2D([0], [0], color=ncol[nh], lw=2.2) for nh in NHS]
-    fig.legend(handles, [fr"$N_h={nh}$" for nh in NHS], loc="upper center",
-               ncol=5, frameon=False, fontsize=7.5, bbox_to_anchor=(0.5, 1.02))
-    fig.tight_layout(rect=[0, 0, 1, 0.98])
+    fig.legend(handles, [fr"$N_h={nh}$" for nh in NHS], loc="lower center",
+               ncol=5, frameon=False, fontsize=7.5, bbox_to_anchor=(0.5, -0.04))
     fig.tight_layout()
     fig.savefig(OUT_PDF, bbox_inches="tight")
     fig.savefig(OUT_PNG, dpi=160, bbox_inches="tight")

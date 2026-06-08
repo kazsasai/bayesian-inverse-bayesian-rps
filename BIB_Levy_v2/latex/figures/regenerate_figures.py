@@ -79,8 +79,11 @@ plt.rcParams.update({
     "savefig.bbox": "tight",
     "lines.linewidth": 1.6,
     "lines.markersize": 5.0,
-    "font.family": "DejaVu Sans",
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
     "mathtext.default": "regular",
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
 })
 
 # ---------------------------------------------------------------------------
@@ -810,8 +813,6 @@ def figure8():
         ax.text(-0.17, 1.04, "A" if pair_name == "BIB-BIB" else "B",
                 transform=ax.transAxes, fontsize=11, fontweight="bold",
                 va="bottom", ha="left")
-        ax.legend(loc="upper left" if pair_name == "BIB-BIB" else "upper left",
-                  frameon=False, fontsize=6.8, ncol=2)
         ax.grid(False)
 
     # ----- Bottom row: sigma(Nh) on log-log
@@ -844,11 +845,11 @@ def figure8():
                     beta = beta_table[design]
                     sigmas.append((h / 10.0) ** (-beta) * 0.06)
             ax.loglog(Nhs, sigmas, "o-", color=DESIGN_COLOR[design],
-                      lw=1.2, ms=3.2,
-                      label=f"{design} (β={beta_table[design]:.2f})")
-        # reference slope -1
+                      lw=1.2, ms=3.2, label="_nolegend_")
+        # reference slope -1 (raised to sit just below the data; labelled in
+        # C/D so it is not confused with the alpha=1.43 guide in A/B)
         xref = np.array([2.5, 22])
-        yref = 0.18 * xref ** -1
+        yref = 0.45 * xref ** -1
         ax.loglog(xref, yref, "k--", lw=1.5, label=r"slope $-1$ ref.")
         ax.set_xlabel(r"$N_h$")
         ax.set_ylabel(r"$\langle\sigma(\hat{P})\rangle$")
@@ -857,9 +858,15 @@ def figure8():
         ax.text(-0.17, 1.04, "C" if pair_name == "BIB-BIB" else "D",
                 transform=ax.transAxes, fontsize=11, fontweight="bold",
                 va="bottom", ha="left")
-        ax.legend(loc="lower left", frameon=False, fontsize=6.8, ncol=1)
+        ax.set_ylim(0.016, 0.6)
+        ax.legend(loc="lower left", frameon=False, fontsize=6.8)
         ax.grid(False)
 
+    # shared bottom legend: the four design colours only (the slope -1 reference
+    # is labelled inside C/D to avoid confusion with the alpha=1.43 A/B guide).
+    handles, labels = axes[0, 0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False,
+               fontsize=7, bbox_to_anchor=(0.5, -0.04))
     safe_save(fig, "fig_nh_sweep.png")
 
 
