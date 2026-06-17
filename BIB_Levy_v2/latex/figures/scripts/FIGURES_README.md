@@ -13,8 +13,8 @@ pip install numpy matplotlib powerlaw
 
 ## 2. Get the data
 
-Large simulation outputs are archived on **Zenodo** (DOI: `10.5281/zenodo.20418789`
-— to be filled in on release). Two ways to make the scripts find it:
+Large simulation outputs are archived on **Zenodo** (DOI: `10.5281/zenodo.20533918`).
+Two ways to make the scripts find it:
 
 ```bash
 # Option A — extract the archive into <repo>/data/

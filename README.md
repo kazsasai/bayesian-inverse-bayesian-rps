@@ -17,7 +17,7 @@ repository.
 
 | Path | What it is |
 |---|---|
-| `simulation/` | Simulation engines: BIB / Bayes-only inference on the *N*-hand RPS game and reward-based variants |
+| `simulation/` | Simulation engines: BIB / Bayes-only inference on the *N*-hand RPS game and reward-based variants (see [`simulation/README.md`](simulation/README.md) for the engine map and the `rpsgame_reward.py` version table) |
 | `simulation_tie_mode_ablation/` | Tie-mode and observation-rule (scheme) ablation runners + analysis |
 | `prod_reruns/` | Locked full-scale production re-runs (cached summaries + runners): matching pennies, laminar finite-size lock, drift/renewal prongs |
 | `BIB_Levy_v2/latex/figures/` | Figure-build scripts (`scripts/build_*.py`, `regenerate_figures.py`, `figdata.py`) and rendered figure outputs |
@@ -38,7 +38,7 @@ Verified with Python 3.13.
 ## Data
 
 The data-driven figures read aggregated simulation outputs archived on Zenodo
-(DOI `10.5281/zenodo.20418789`). Two archives are provided; the *figure-only*
+(DOI `10.5281/zenodo.20533918`). Two archives are provided; the *figure-only*
 one (~1.1 GB) is sufficient to rebuild every figure.
 
 ```bash
@@ -80,11 +80,11 @@ python pnas_si/figures/verify_figS_behaviour_clauset.py   # TPL-vs-EXP, Clauset 
 
 | Figure | Output | Script |
 |---|---|---|
-| Fig 1 | `pnas/figures/fig1_composite.pdf` | `pnas/figures/build_Fig1_bc.py` |
-| Fig 2 | `fig_universality.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig3_universality.py` |
-| Fig 3 | `fig_nh_sweep.pdf` | `BIB_Levy_v2/latex/figures/regenerate_figures.py 8` |
-| Fig 4 | `pnas/figures/fig_mp_generality.pdf` | `pnas/figures/build_FigMP.py` |
-| Fig 5 | `fig_scope.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig_scope_internal_behaviour.py` |
+| Fig 1 | `fig_soc_mechanism.pdf` | `pnas/figures/build_Fig1_bc.py` |
+| Fig 3 | `fig_universality.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig3_universality.py` |
+| Fig 7 | `fig_nh_sweep.pdf` | `BIB_Levy_v2/latex/figures/regenerate_figures.py` |
+| Fig 9 | `fig_mp_generality.pdf` | `pnas/figures/build_FigMP.py` |
+| Fig 12 | `fig_scope.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig_scope_internal_behaviour.py` |
 
 See `FIGURE_INVENTORY.md` for the full list including SI figures.
 

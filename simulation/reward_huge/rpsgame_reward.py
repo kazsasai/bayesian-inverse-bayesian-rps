@@ -1,3 +1,11 @@
+# =============================================================================
+# PROVENANCE  (see ../README.md for the full engine map)
+#   VERSION : production engine, gen-1   |   1019 lines   |   md5(head) fd4b6e
+#   Canonical reward engine: adds likelihood_spread() (posterior spread sigma ->
+#   beta exponent) and streak_lengths(); emits durations_* and sigmas_*.json.
+#   BYTE-IDENTICAL to analyze_sharpness_plateau/rpsgame_reward.py (same md5).
+#   Ships the production runners run_phase1/2_nh_sweep.sh, run_all_huge_v2/v3.sh.
+# =============================================================================
 """
 Reward-based BIB inference for Rock-Paper-Scissors
 ====================================================

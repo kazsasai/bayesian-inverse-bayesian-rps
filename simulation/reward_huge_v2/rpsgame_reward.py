@@ -1,3 +1,10 @@
+# =============================================================================
+# PROVENANCE  (see ../README.md for the full engine map)
+#   VERSION : production engine, gen-2   |   935 lines   |   md5(head) bb74f3
+#   Same inference model as gen-1, but likelihood_spread() is REMOVED (sigma is
+#   not recorded). Produces the reward-tournament tier reward_huge_v2_<design>
+#   (rewards_bib-bo_*). For the posterior-spread / beta data use the gen-1 engine.
+# =============================================================================
 """
 Reward-based BIB inference for Rock-Paper-Scissors
 ====================================================
