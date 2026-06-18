@@ -19,6 +19,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -35,13 +36,13 @@ SEED = 11
 plt.rcParams.update({
     "font.family": "sans-serif",
     "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
-    "font.size": 9, "axes.labelsize": 10,
+    "font.size": 8, "axes.labelsize": 8.5,
     "xtick.labelsize": 8.5, "ytick.labelsize": 8.5, "legend.fontsize": 8,
     "axes.linewidth": 0.8, "lines.linewidth": 1.3,
-    "xtick.direction": "in", "ytick.direction": "in",
+    "xtick.direction": "in", "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
     "xtick.major.size": 3, "ytick.major.size": 3,
     "xtick.minor.size": 1.8, "ytick.minor.size": 1.8,
-    "axes.spines.top": False, "axes.spines.right": False,
+    "axes.spines.top": True, "axes.spines.right": True,
     "pdf.fonttype": 42, "ps.fonttype": 42,
 })
 
@@ -107,7 +108,7 @@ def main():
     print(f"  d=0 CCDF log-log slope on [3,300] = {slope:.3f}  (target -0.5)")
 
     colors = plt.cm.viridis(np.linspace(0.0, 0.9, len(DRIFTS)))
-    fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.1))
+    fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.05))
 
     # ---- Panel A: raw first-return CCDFs ----
     for d, col in zip(DRIFTS, colors):
@@ -121,7 +122,7 @@ def main():
     axA.set_ylabel(r"CCDF  $P(T \geq \tau)$")
     axA.set_ylim(1e-4, 1.4)
     axA.legend(loc="lower left", frameon=False, fontsize=7.5, ncol=1)
-    axA.text(-0.16, 1.02, "A", transform=axA.transAxes,
+    axA.text(-0.16, 1.02, "(a)", transform=axA.transAxes,
              fontsize=11, fontweight="bold", va="bottom", ha="left")
 
     # ---- Panel B: tau d^2 collapse (d > 0) ----
@@ -140,12 +141,11 @@ def main():
     axB.legend(loc="upper left", frameon=False, fontsize=7.5)
     axB.text(0.97, 0.05, r"collapse onto a single" "\n" r"scaling function $G(\tau d^{2})$",
              transform=axB.transAxes, fontsize=8, va="bottom", ha="right")
-    axB.text(-0.16, 1.02, "B", transform=axB.transAxes,
+    axB.text(-0.16, 1.02, "(b)", transform=axB.transAxes,
              fontsize=11, fontweight="bold", va="bottom", ha="left")
 
-    fig.tight_layout()
-    fig.savefig(OUT_PDF, bbox_inches="tight")
-    fig.savefig(OUT_PNG, dpi=200, bbox_inches="tight")
+    fig.savefig(OUT_PDF)
+    fig.savefig(OUT_PNG, dpi=200)
     print("wrote", OUT_PDF.name, "/", OUT_PNG.name)
 
 

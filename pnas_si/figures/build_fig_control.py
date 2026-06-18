@@ -26,6 +26,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 import warnings
 warnings.filterwarnings("ignore")
 import powerlaw
@@ -47,9 +48,9 @@ plt.rcParams.update({
     "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
     "font.size": 8, "axes.labelsize": 8.5, "xtick.labelsize": 7.5,
     "ytick.labelsize": 7.5, "legend.fontsize": 6.3, "axes.linewidth": 0.8,
-    "lines.linewidth": 1.0, "xtick.direction": "in", "ytick.direction": "in",
+    "lines.linewidth": 1.0, "xtick.direction": "in", "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
     "xtick.major.size": 3, "ytick.major.size": 3, "xtick.minor.size": 1.8,
-    "ytick.minor.size": 1.8, "axes.spines.top": False, "axes.spines.right": False,
+    "ytick.minor.size": 1.8, "axes.spines.top": True, "axes.spines.right": True,
     "pdf.fonttype": 42, "ps.fonttype": 42,
 })
 
@@ -65,7 +66,7 @@ REF = "0.45"
 
 
 def panel_label(ax, letter):
-    ax.text(-0.17, 1.04, letter.upper(), transform=ax.transAxes,
+    ax.text(-0.17, 1.04, f"({letter.lower()})", transform=ax.transAxes,
             fontsize=11, fontweight="bold", va="bottom", ha="left")
 
 
@@ -154,7 +155,7 @@ def ref_32(ax, x0=5.0, x1=4000.0, y0=0.16):
 def main():
     z = np.load(BASE_NPZ)
     fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.05),
-                                   gridspec_kw={"wspace": 0.23})
+                                   )
 
     # ===== (A) vs uniform-random =====
     perR, poolR = bib_pool("bib-random", agent1_only=True)

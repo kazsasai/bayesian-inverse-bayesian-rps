@@ -21,6 +21,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 import powerlaw
 import warnings
 warnings.simplefilter("ignore")
@@ -115,15 +116,15 @@ def build_cache(budget=36.0):
 
 
 def panel_label(ax, letter):
-    ax.text(-0.17, 1.04, letter.upper(), transform=ax.transAxes,
+    ax.text(-0.17, 1.04, f"({letter.lower()})", transform=ax.transAxes,
             fontsize=11, fontweight="bold", va="bottom", ha="left")
 
 
 def plot(cache):
     plt.rcParams.update({"font.size": 11, "font.family": "sans-serif",
                          "axes.linewidth": 0.8, "pdf.fonttype": 42,
-                         "ps.fonttype": 42, "savefig.bbox": "tight"})
-    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":False,"axes.spines.right":False,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
+                         "ps.fonttype": 42})
+    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.top":True,"ytick.right":True,"xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":True,"axes.spines.right":True,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
     fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.05))
 
     # ---- (a) m sweep ----
@@ -175,10 +176,8 @@ def plot(cache):
     axB.legend(loc="lower left", frameon=False, fontsize=6.5, ncol=1)
     panel_label(axB, "b")
 
-    fig.subplots_adjust(wspace=0.24)
-    fig.tight_layout()
-    fig.savefig(OUT_PDF, bbox_inches="tight")
-    fig.savefig(OUT_PNG, dpi=200, bbox_inches="tight")
+    fig.savefig(OUT_PDF)
+    fig.savefig(OUT_PNG, dpi=200)
     print("Saved:", OUT_PDF)
 
 

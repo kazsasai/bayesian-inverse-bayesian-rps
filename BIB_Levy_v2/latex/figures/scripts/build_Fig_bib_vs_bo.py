@@ -32,6 +32,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -51,13 +52,13 @@ JSON_PATH = str(figdata.find(_rel)) if figdata.exists(_rel) \
 # ----------------------------------------------------------------------
 plt.rcParams.update({
     "font.size": 11, "font.family": "sans-serif", "axes.linewidth": 0.8,
-    "pdf.fonttype": 42, "ps.fonttype": 42, "savefig.bbox": "tight",
+    "pdf.fonttype": 42, "ps.fonttype": 42,
     "savefig.dpi": 300,
 })
 
 DES = ["rs", "ra", "ss", "sa"]
-DES_LONG = {"rs": "rs\n(rank 1)", "ra": "ra\n(rank 2)",
-            "ss": "ss\n(rank 3)", "sa": "sa\n(rank 4)"}
+DES_LONG = {"rs": "rs", "ra": "ra",
+            "ss": "ss", "sa": "sa"}
 COL = {"rs": "#1f77b4", "ra": "#ff7f0e", "ss": "#2ca02c", "sa": "#d62728"}
 BLUE = "#3a6ea5"
 STRATEGIES = ["rs", "ss", "ra", "sa", "random"]
@@ -66,7 +67,7 @@ ZCRIT = 1.96
 
 
 def panel_label(ax, letter):
-    ax.text(-0.17, 1.04, letter.upper(), transform=ax.transAxes, fontsize=11,
+    ax.text(-0.17, 1.04, f"({letter.lower()})", transform=ax.transAxes, fontsize=11,
             fontweight="bold", va="bottom", ha="left")
 
 
@@ -99,10 +100,10 @@ def main():
         summary.append((s1, float(np.mean(wrs)), float(sum(zsum))))
     summary.sort(key=lambda x: x[1], reverse=True)
 
-    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":False,"axes.spines.right":False,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
+    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.top":True,"ytick.right":True,"xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":True,"axes.spines.right":True,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
     fig, ((axA, axB), (axC, axD)) = plt.subplots(
         2, 2, figsize=(7.0, 6.1),
-        gridspec_kw={"wspace": 0.55, "hspace": 0.42})
+        )
 
     # ============================ (a) net advantage ============================
     means, sds, zs = {}, {}, {}
@@ -134,8 +135,7 @@ def main():
                      fontweight="bold" if stars(zs[d]) != "ns" else "normal")
     axA.set_xticks(xpos)
     axA.set_xticklabels([DES_LONG[d] for d in DES], fontsize=7)
-    axA.set_xlabel("Design ordered by Nash-distance hardness  "
-                   "(rank 1 = near, 4 = far)", fontsize=6.5)
+    axA.set_xlabel(r"Design (rs $\rightarrow$ sa)", fontsize=6.5)
     axA.set_ylabel(r"Net advantage of BIB per step  $(r_{\rm win}-r_{\rm lose})$")
     panel_label(axA, "a")
 
@@ -197,9 +197,8 @@ def main():
     axD.set_ylim(min(wr_vals) - 0.0015, max(wr_vals) + 0.0020)
     panel_label(axD, "d")
 
-    fig.tight_layout()
-    fig.savefig(OUT_PDF, bbox_inches="tight")
-    fig.savefig(OUT_PNG, dpi=160, bbox_inches="tight")
+    fig.savefig(OUT_PDF)
+    fig.savefig(OUT_PNG, dpi=160)
     print("reward z:", {d: round(zs[d], 2) for d in DES})
     print("BO-internal order:", order)
     print("wrote:", OUT_PDF)

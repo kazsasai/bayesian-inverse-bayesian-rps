@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 import powerlaw
 
 HERE = Path(__file__).resolve().parent
@@ -85,7 +86,7 @@ def collect():
 def main():
     warnings.simplefilter('ignore')
     by_pair, by_design_pair = collect()
-    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":False,"axes.spines.right":False,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
+    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.top":True,"ytick.right":True,"xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":True,"axes.spines.right":True,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
     fig, axes = plt.subplots(1, 2, figsize=(7.0, 3.05))
     panel_tag = {0: 'A', 1: 'B'}
 
@@ -117,7 +118,7 @@ def main():
             # are separable by both colour AND shape; fit line carries legend
             fit.plot_ccdf(ax=ax, color=DESIGN_COLORS[d],
                           marker=DESIGN_MARKERS[d], linestyle='None',
-                          markersize=5.5, markevery=0.10, alpha=0.75,
+                          markersize=3.2, markevery=0.12, alpha=0.9,
                           markeredgecolor='black', markeredgewidth=0.4)
             fit.truncated_power_law.plot_ccdf(
                 ax=ax, color=DESIGN_COLORS[d], linestyle='-', linewidth=1.6,
@@ -133,7 +134,7 @@ def main():
 
         # House-style panel label: bold lower-case tag, top-left just above
         # the axes (matches build_FigS1/FigS6/FigS7 panel_label), no title
-        ax.text(-0.17, 1.04, panel_tag[ax_idx], transform=ax.transAxes,
+        ax.text(-0.17, 1.04, f"({panel_tag[ax_idx].lower()})", transform=ax.transAxes,
                 ha='left', va='bottom', fontsize=11, fontweight='bold')
 
         ax.set_xlabel(r'plateau length  $T_{\mathrm{pl}}$', fontsize=7.5)
@@ -147,8 +148,7 @@ def main():
         print(f'{pair}: pooled={a_pooled:.3f}  per-design='
               f'{ {d: round(per_design[d], 3) for d in per_design} }', flush=True)
 
-    plt.tight_layout()
-    fig.savefig(OUT, bbox_inches='tight')
+    fig.savefig(OUT)
     plt.close(fig)
     print(f'Saved: {OUT}')
 

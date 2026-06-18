@@ -22,6 +22,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -36,12 +37,12 @@ SEED = 7
 plt.rcParams.update({
     "font.family": "sans-serif",
     "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
-    "font.size": 9, "axes.labelsize": 10,
+    "font.size": 8, "axes.labelsize": 8.5,
     "xtick.labelsize": 8.5, "ytick.labelsize": 8.5, "legend.fontsize": 8.5,
     "axes.linewidth": 0.8, "lines.linewidth": 1.0,
-    "xtick.direction": "in", "ytick.direction": "in",
+    "xtick.direction": "in", "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
     "xtick.major.size": 3, "ytick.major.size": 3,
-    "axes.spines.top": False, "axes.spines.right": False,
+    "axes.spines.top": True, "axes.spines.right": True,
     "pdf.fonttype": 42, "ps.fonttype": 42,
 })
 
@@ -82,7 +83,7 @@ def main():
     pad = 0.12 * (hi - lo)
     line = np.array([lo - pad, hi + pad])
 
-    fig, ax = plt.subplots(figsize=(3.5, 3.25))
+    fig, ax = plt.subplots(figsize=(3.375, 3.375))
     ax.plot(line, line, "--", color="black", lw=1.2, label="$y = x$", zorder=1)
     ax.scatter(predicted, measured, s=44, facecolor="#1f77b4",
                edgecolor="black", linewidth=0.6, zorder=2)
@@ -94,9 +95,8 @@ def main():
     ax.text(0.04, 0.84, "log-posterior-ratio drift\n= KL gap to the data",
             transform=ax.transAxes, fontsize=8.5, va="top")
 
-    fig.tight_layout()
-    fig.savefig(OUT_PDF, bbox_inches="tight")
-    fig.savefig(OUT_PNG, dpi=200, bbox_inches="tight")
+    fig.savefig(OUT_PDF)
+    fig.savefig(OUT_PNG, dpi=200)
     print("wrote", OUT_PDF.name, "/", OUT_PNG.name)
 
 

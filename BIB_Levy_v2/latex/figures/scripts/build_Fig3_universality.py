@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import figdata
 
@@ -87,15 +88,15 @@ def main():
         "font.size": 8, "axes.labelsize": 8.5,
         "xtick.labelsize": 7.5, "ytick.labelsize": 7.5, "legend.fontsize": 6.8,
         "axes.linewidth": 0.8, "lines.linewidth": 1.0,
-        "xtick.direction": "in", "ytick.direction": "in",
+        "xtick.direction": "in", "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
         "xtick.major.size": 3, "ytick.major.size": 3,
         "xtick.minor.size": 1.8, "ytick.minor.size": 1.8,
-        "axes.spines.top": False, "axes.spines.right": False,
-        "pdf.fonttype": 42, "ps.fonttype": 42, "savefig.bbox": "tight"})
+        "axes.spines.top": True, "axes.spines.right": True,
+        "pdf.fonttype": 42, "ps.fonttype": 42})
     # rows = observable (argmax / laminar); columns = scheme (BIB / BO)
     fig, ((axAB, axAO), (axLB, axLO)) = plt.subplots(
         2, 2, figsize=(7.0, 6.1),
-        gridspec_kw={"wspace": 0.24, "hspace": 0.30})
+        )
 
     # --- top row: argmax persistence ---
     _panel(axAB, argmax_durations, "bib-bib", (1e-6, 1.5))
@@ -123,14 +124,13 @@ def main():
     tags = {axAB: ("A", "BIB-BIB"), axAO: ("B", "BO-BO"),
             axLB: ("C", "BIB-BIB"), axLO: ("D", "BO-BO")}
     for ax, (t, scheme) in tags.items():
-        ax.text(-0.17, 1.04, t, transform=ax.transAxes, fontsize=11,
+        ax.text(-0.17, 1.04, f"({t.lower()})", transform=ax.transAxes, fontsize=11,
                 fontweight="bold", va="bottom", ha="left")
         ax.text(0.97, 0.95, scheme, transform=ax.transAxes, fontsize=8,
                 fontweight="bold", va="top", ha="right", color="0.2")
 
-    fig.tight_layout()
-    fig.savefig(OUT_PDF, bbox_inches="tight")
-    fig.savefig(OUT_PNG, dpi=160, bbox_inches="tight")
+    fig.savefig(OUT_PDF)
+    fig.savefig(OUT_PNG, dpi=160)
     print("Saved:", OUT_PDF)
 
 

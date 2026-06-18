@@ -25,6 +25,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 from matplotlib.lines import Line2D
 from scipy.stats import spearmanr
 warnings.filterwarnings("ignore")
@@ -41,11 +42,11 @@ plt.rcParams.update({
     "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
     "font.size": 8, "axes.labelsize": 8.5, "xtick.labelsize": 7.5, "ytick.labelsize": 7.5,
     "legend.fontsize": 7, "axes.linewidth": 0.8, "lines.linewidth": 1.0,
-    "xtick.direction": "in", "ytick.direction": "in",
+    "xtick.direction": "in", "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
     "xtick.major.size": 3.0, "ytick.major.size": 3.0,
     "xtick.minor.size": 1.8, "ytick.minor.size": 1.8,
     "xtick.major.width": 0.8, "ytick.major.width": 0.8,
-    "axes.spines.top": False, "axes.spines.right": False,
+    "axes.spines.top": True, "axes.spines.right": True,
     "savefig.dpi": 300, "figure.dpi": 150,
     "pdf.fonttype": 42, "ps.fonttype": 42,
 })
@@ -136,7 +137,6 @@ print(f"transition-run gradient rho={rho_t:+.3f} p={p_t:.4f}")
 
 # ---------- figure ----------
 fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.05))
-fig.subplots_adjust(left=0.085, right=0.985, bottom=0.16, top=0.93, wspace=0.32)
 
 # Panel A
 for (x, y), lab, col, mk in [((cx2, cy2), "fixed bots (exploitable)", C_FIX, "o"),
@@ -173,9 +173,9 @@ axB.legend(handles=[Line2D([], [], marker="o", ls="", mfc=C_FIX, mec="black",
 
 # panel letters
 for ax, L in [(axA, "A"), (axB, "B")]:
-    ax.text(-0.17, 1.04, L, transform=ax.transAxes,
+    ax.text(-0.17, 1.04, f"({L.lower()})", transform=ax.transAxes,
             fontsize=11, fontweight="bold", va="top", ha="left")
 
 for ext in ("pdf", "png"):
-    fig.savefig(os.path.join(HERE, f"figS_bib_behaviour.{ext}"), bbox_inches="tight")
+    fig.savefig(os.path.join(HERE, f"figS_bib_behaviour.{ext}"))
 print("saved figS_bib_behaviour.pdf / .png")

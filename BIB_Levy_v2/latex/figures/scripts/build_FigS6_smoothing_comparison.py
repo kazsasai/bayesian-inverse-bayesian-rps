@@ -36,6 +36,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -52,14 +53,13 @@ plt.rcParams.update({
     "font.size": 11,
     "font.family": "sans-serif",
     "axes.linewidth": 0.8,
-    "savefig.bbox": "tight",
-    "savefig.dpi": 300,
+        "savefig.dpi": 300,
     "pdf.fonttype": 42,
     "ps.fonttype": 42,
 })
 
 def panel_label(ax, letter):
-    ax.text(-0.17, 1.04, letter.upper(), transform=ax.transAxes,
+    ax.text(-0.17, 1.04, f"({letter.lower()})", transform=ax.transAxes,
             fontsize=11, fontweight="bold", va="bottom", ha="left")
 
 def load_traj(fname):
@@ -73,11 +73,14 @@ n_runs = cond.shape[0]
 n_down = cond.shape[1]
 t = np.linspace(0, T_TOTAL, n_down)
 
-# alpha values for the argmax-persistence fits (from CHANGES.md verification)
-ALPHA_COND = 1.341
-ALPHA_ALW = 1.508
+# alpha values for the argmax-persistence fits, reproduced from deposited code
+# via regen_smoothing_table.py (seeds 0-99): conditional (1) Ibuka-exact and
+# always-on (4). The always-on exponent is NOT steeper -- if anything slightly
+# shallower -- the suppression is a cutoff/run-length collapse, not a re-slope.
+ALPHA_COND = 1.358
+ALPHA_ALW = 1.257
 
-plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":False,"axes.spines.right":False,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
+plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.top":True,"ytick.right":True,"xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":True,"axes.spines.right":True,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
 fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.05), sharex=True)
 
 def draw(ax, data, color, title, alpha_val, letter):
@@ -108,8 +111,6 @@ ymax = max((cond.mean(0) + cond.std(0)).max(),
 for ax in (axA, axB):
     ax.set_ylim(0, ymax)
 
-fig.subplots_adjust(wspace=0.18)
-fig.tight_layout()
 fig.savefig(OUT_PDF)
 fig.savefig(OUT_PNG, dpi=200)
 print(f"conditional: n_runs={n_runs} sigma_bar={s_cond:.4f}")

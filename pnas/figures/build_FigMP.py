@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 import powerlaw, warnings
 warnings.filterwarnings("ignore")
 
@@ -41,12 +42,12 @@ def main():
     plt.rcParams.update({"font.family": "sans-serif",
         "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"], "font.size": 8,
         "axes.labelsize": 8.5, "xtick.labelsize": 7.5, "ytick.labelsize": 7.5, "legend.fontsize": 6.5,
-        "axes.linewidth": 0.8, "lines.linewidth": 1.0, "xtick.direction": "in", "ytick.direction": "in",
+        "axes.linewidth": 0.8, "lines.linewidth": 1.0, "xtick.direction": "in", "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
         "xtick.major.size": 3, "ytick.major.size": 3, "xtick.minor.size": 1.8, "ytick.minor.size": 1.8,
-        "axes.spines.top": False, "axes.spines.right": False, "pdf.fonttype": 42, "ps.fonttype": 42,
-        "savefig.bbox": "tight"})
+        "axes.spines.top": True, "axes.spines.right": True, "pdf.fonttype": 42, "ps.fonttype": 42,
+        })
     fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.05),
-                                   gridspec_kw={"wspace": 0.26})
+                                   constrained_layout=True)
     for obs, ax, lab in [("argmax", axA, r"$T_{\mathrm{argmax}}$ (steps)"),
                          ("laminar", axB, r"$L_{\mathrm{laminar}}$ (steps)")]:
         for key, (name, col, mk) in DES.items():
@@ -63,10 +64,9 @@ def main():
         ax.legend(loc="lower left", frameon=False, fontsize=6.5)
     axA.set_ylabel(r"CCDF $P(T\geq t)$"); axB.set_ylabel(r"CCDF $P(L\geq t)$")
     for ax, L in [(axA, "A"), (axB, "B")]:
-        ax.text(-0.17, 1.04, L, transform=ax.transAxes, fontsize=11, fontweight="bold",
+        ax.text(-0.17, 1.04, f"({L.lower()})", transform=ax.transAxes, fontsize=11, fontweight="bold",
                 va="bottom", ha="left")
-    fig.tight_layout()
-    fig.savefig(OUT_PDF, bbox_inches="tight"); fig.savefig(OUT_PNG, dpi=160, bbox_inches="tight")
+    fig.savefig(OUT_PDF); fig.savefig(OUT_PNG, dpi=160)
     print("wrote", OUT_PDF)
 
 

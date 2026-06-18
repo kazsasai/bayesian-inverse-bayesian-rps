@@ -41,6 +41,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 
 warnings.filterwarnings("ignore")
 
@@ -76,8 +77,7 @@ plt.rcParams.update({
     "ytick.minor.width": 0.8,
     "figure.dpi": 300,
     "savefig.dpi": 300,
-    "savefig.bbox": "tight",
-    "lines.linewidth": 1.6,
+        "lines.linewidth": 1.6,
     "lines.markersize": 5.0,
     "font.family": "sans-serif",
     "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
@@ -131,21 +131,23 @@ def tpl_alpha_estimate(values, xmin=1, xmax=None):
     return 1.0 + len(a) / np.sum(np.log(a / xmin))
 
 
-def safe_save(fig, name):
+def safe_save(fig, name, bbox_inches=None):
     """Save figure to BOTH .png (preview) and .pdf (vector, for PRE
     submission) using atomic os.replace for Dropbox safety.
     ``name`` should end with .png; the matching .pdf is derived
-    automatically."""
+    automatically. ``bbox_inches="tight"`` is passed through only for
+    figures whose shared bottom legend sits just outside the figure box
+    (e.g. fig_nh_sweep); leave it None to keep native = figsize."""
     base = name[:-4] if name.endswith(".png") else name
     # ---- PNG ----------------------------------------------------------
     out_png = FIG_DIR / f"{base}.png"
     tmp_png = FIG_DIR / f"{base}.tmp.png"
-    fig.savefig(tmp_png, dpi=300, bbox_inches="tight")
+    fig.savefig(tmp_png, dpi=300, bbox_inches=bbox_inches)
     os.replace(tmp_png, out_png)
     # ---- PDF (vector) -------------------------------------------------
     out_pdf = FIG_DIR / f"{base}.pdf"
     tmp_pdf = FIG_DIR / f"{base}.tmp.pdf"
-    fig.savefig(tmp_pdf, bbox_inches="tight")  # dpi irrelevant for vector
+    fig.savefig(tmp_pdf, bbox_inches=bbox_inches)  # dpi irrelevant for vector
     os.replace(tmp_pdf, out_pdf)
     plt.close(fig)
     sz_png = out_png.stat().st_size
@@ -181,7 +183,7 @@ DESIGN_COLOR = {
 
 # Documented exponents from the manuscript
 ALPHA_ARG_BIB = {"rs": 1.43, "ra": 1.43, "ss": 1.45, "sa": 1.41}
-ALPHA_ARG_BO  = {"rs": 3.42, "ra": 3.58, "ss": 2.24, "sa": 1.89}
+ALPHA_ARG_BO  = {"rs": 2.04, "ra": 2.15, "ss": 1.51, "sa": 1.50}  # regenerated: powerlaw TPL, Clauset auto x_min (uniform with BIB), Nh=10 m=50
 ALPHA_LAM_BIB = {"rs": 1.338, "ra": 1.340, "ss": 1.339, "sa": 1.342}
 
 # Win-rate / cum-reward at m=50, Nh=10 (Table II in MS)
@@ -193,17 +195,19 @@ REWARD_TABLE = {  # design -> (winrate, std, cumR_per_step, z, p_marker)
 }
 
 # Nh sweep (top row of Fig 8) -- from MS
-NH_SWEEP_BIB = {  # design -> [(Nh, alpha)]
-    "rs": [(3, 1.62), (6, 1.442), (10, 1.433), (15, 1.43), (20, 1.92)],
-    "ra": [(3, 1.62), (6, 1.418), (10, 1.433), (15, 1.65), (20, 1.65)],
-    "ss": [(3, 1.62), (6, 1.456), (10, 1.445), (15, 2.21), (20, 2.30)],
-    "sa": [(3, 1.62), (6, 1.425), (10, 1.412), (15, 1.28), (20, 1.30)],
+NH_SWEEP_BIB = {  # design -> [(Nh, alpha)]  core (6,10) = Table S12 (agent-1);
+    # boundaries (3,15,20) regenerated from deposited data, powerlaw TPL Clauset auto x_min
+    "rs": [(3, 1.66), (6, 1.442), (10, 1.433), (15, 1.43), (20, 1.78)],
+    "ra": [(3, 1.59), (6, 1.418), (10, 1.433), (15, 1.40), (20, 1.49)],
+    "ss": [(3, 1.62), (6, 1.456), (10, 1.445), (15, 1.44), (20, 1.52)],
+    "sa": [(3, 1.60), (6, 1.425), (10, 1.412), (15, 1.40), (20, 1.57)],
 }
-NH_SWEEP_BO = {  # design -> [(Nh, alpha)]
-    "rs": [(3, 1.50), (6, 2.10), (10, 3.42), (15, 4.10), (20, 4.60)],
-    "ra": [(3, 1.55), (6, 2.30), (10, 3.58), (15, 4.30), (20, 5.00)],
-    "ss": [(3, 1.10), (6, 2.50), (10, 2.24), (15, 3.50), (20, 4.20)],
-    "sa": [(3, 1.00), (6, 6.49), (10, 1.89), (15, 3.00), (20, 6.00)],
+NH_SWEEP_BO = {  # design -> [(Nh, alpha)]  regenerated from deposited data:
+    # powerlaw TPL, Clauset auto x_min (same pipeline as BIB); TPL Akaike-preferred at every Nh.
+    "rs": [(3, 2.81), (6, 2.15), (10, 2.04), (15, 2.18), (20, 1.67)],
+    "ra": [(3, 2.78), (6, 2.26), (10, 2.15), (15, 1.90), (20, 1.53)],
+    "ss": [(3, 1.23), (6, 1.37), (10, 1.51), (15, 1.75), (20, 1.19)],
+    "sa": [(3, 1.18), (6, 1.34), (10, 1.50), (15, 1.57), (20, 1.86)],
 }
 
 # Beta (sigma~Nh^{-beta}) from MS
@@ -782,16 +786,16 @@ def figure8():
     # Numbered as Fig 7 in the manuscript (post-renumber); rendered as
     # figure* (double-column) so the 2x2 panels stay readable.
     print("\n--- Fig7 Nh sweep (figure*) ---")
-    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":False,"axes.spines.right":False,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
+    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.top":True,"ytick.right":True,"xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":True,"axes.spines.right":True,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
     # Uniform font-scale spec: double-col figures use figsize_W = 16.4
     # inch with width=\linewidth in LaTeX (effective scale 7.05/16.4
     # = 0.430, matching the single-col scale of 0.426 within <1%).
     # figsize_H = 12.5 gives each subplot ~8.0 x 6.0 inch
     # (panel aspect ~1.33:1, matching the rest of the figure suite).
     fig, axes = plt.subplots(2, 2, figsize=(7.0, 6.1),
-                             constrained_layout=True)
+                             constrained_layout=True, sharey='row')
     # Slightly more breathing room between the 2x2 panels.
-    fig.get_layout_engine().set(hspace=0.06, wspace=0.06,
+    fig.get_layout_engine().set(hspace=0.06,
                                 h_pad=0.08, w_pad=0.08)
 
     # ----- Top row: alpha(Nh)
@@ -810,10 +814,18 @@ def figure8():
         ax.set_xlabel(r"Hypothesis count $N_h$")
         ax.set_ylabel(r"$\alpha$")
         ax.set_xticks([3, 6, 10, 15, 20])
-        ax.text(-0.17, 1.04, "A" if pair_name == "BIB-BIB" else "B",
+        ax.text(-0.17, 1.04, "(a)" if pair_name == "BIB-BIB" else "(b)",
                 transform=ax.transAxes, fontsize=11, fontweight="bold",
                 va="bottom", ha="left")
         ax.grid(False)
+
+    # align the two top panels on a common y-axis (BIB tight vs BO fanned)
+    _yl = (min(axes[0, 0].get_ylim()[0], axes[0, 1].get_ylim()[0]),
+           max(axes[0, 0].get_ylim()[1], axes[0, 1].get_ylim()[1]))
+    for _a in (axes[0, 0], axes[0, 1]):
+        _a.set_ylim(_yl)
+    axes[0, 1].tick_params(labelleft=False)
+    axes[0, 1].set_ylabel("")
 
     # ----- Bottom row: sigma(Nh) on log-log
     # Try to load real sigma data, else use power-law mock with beta values
@@ -855,19 +867,25 @@ def figure8():
         ax.set_ylabel(r"$\langle\sigma(\hat{P})\rangle$")
         ax.set_xticks([3, 6, 10, 15, 20])
         ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-        ax.text(-0.17, 1.04, "C" if pair_name == "BIB-BIB" else "D",
+        ax.text(-0.17, 1.04, "(c)" if pair_name == "BIB-BIB" else "(d)",
                 transform=ax.transAxes, fontsize=11, fontweight="bold",
                 va="bottom", ha="left")
         ax.set_ylim(0.016, 0.6)
         ax.legend(loc="lower left", frameon=False, fontsize=6.8)
         ax.grid(False)
 
+    # mirror the top row: the right column shares the row y-axis (sharey='row'),
+    # so drop panel (d)'s duplicate y-label and tick labels (same sigma scale
+    # as panel (c)).
+    axes[1, 1].tick_params(labelleft=False)
+    axes[1, 1].set_ylabel("")
+
     # shared bottom legend: the four design colours only (the slope -1 reference
     # is labelled inside C/D to avoid confusion with the alpha=1.43 A/B guide).
     handles, labels = axes[0, 0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False,
                fontsize=7, bbox_to_anchor=(0.5, -0.04))
-    safe_save(fig, "fig_nh_sweep.png")
+    safe_save(fig, "fig_nh_sweep.png", bbox_inches="tight")
 
 
 # ===========================================================================
@@ -876,49 +894,56 @@ def figure8():
 
 def figure2():
     print("\n--- Fig2 dynamics demo ---")
-    # We construct a representative-but-plausible BIB-vs-BO 1500-step demo
-    # via a lightweight Markov toy: BIB picks one hypothesis dominant for
-    # bursty periods with sudden switches; BO posterior stays diffuse.
+    plt.rcParams.update({"font.family": "sans-serif",
+        "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
+        "font.size": 8, "axes.labelsize": 8.5, "xtick.labelsize": 7.5,
+        "ytick.labelsize": 7.5, "axes.linewidth": 0.8,
+        "xtick.direction": "in", "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
+        "axes.spines.top": True, "axes.spines.right": True,
+        "pdf.fonttype": 42, "ps.fonttype": 42})
+    # Real representative run (rs design, Nh=10, m=50, seed=42) via the
+    # production reward simulator -- the SAME run used by the PNAS Fig.~1 /
+    # SI dynamics figures, not a synthetic toy.
+    import sys as _sys
+    from pathlib import Path as _Path
+    _root = next(p for p in _Path(__file__).resolve().parents
+                 if (p / "simulation").is_dir())
+    _sys.path.insert(0, str(_root / "simulation" / "reward_huge_v2"))
+    from rpsgame_reward import AgentReward
 
-    rng = np.random.default_rng(2026)
     T = 1500
-    Nh = 10
+    SEED = 42
     sym2col = {0: "#e6c700", 1: "#1f77b4", 2: "#2ca02c"}  # R, P, S
+    _SYM_IDX = {"r": 0, "p": 1, "s": 2}
 
-    # ----- BIB-BIB: bursty single-hypothesis dominance -----
-    bib_hands = np.zeros(T, dtype=int)
-    bib_argmax = np.zeros(T, dtype=int)
-    bib_post = np.zeros((Nh, T))
-    h_active = rng.integers(0, Nh)
-    for t in range(T):
-        # heavy-tail dwell: change h with prob ~ 1/(t-switch+1)^alpha
-        if rng.random() < 0.012:
-            # rare switch
-            h_active = rng.integers(0, Nh)
-        bib_argmax[t] = h_active
-        bib_hands[t] = rng.integers(0, 3)
-        # posterior: concentrated on h_active
-        p = rng.dirichlet([0.3] * Nh)
-        p[h_active] += 4.0
-        p /= p.sum()
-        bib_post[:, t] = p
+    def _run(a1, a2, seed=SEED):
+        g1 = AgentReward(a1, h_length=50, init_mode="random",
+                         predict_mode="sample", seed=seed)
+        g2 = AgentReward(a2, h_length=50, init_mode="random",
+                         predict_mode="sample", seed=seed + 100000)
+        Nh = g1.bayes.h_num
+        P = np.empty((T, Nh)); H = np.empty(T, dtype=int)
+        for t in range(T):
+            h1 = g1.choice(); h2 = g2.choice()
+            P[t] = g1.bayes.h_prov.copy(); H[t] = _SYM_IDX[h1]
+            g1.update_from_outcome(h1, h2); g2.update_from_outcome(h2, h1)
+        return P, H, Nh
 
-    # ----- BO-BO: diffuse posterior, near-uniform -----
-    bo_hands = rng.integers(0, 3, size=T)
-    bo_post = np.zeros((Nh, T))
-    p = np.ones(Nh) / Nh
-    for t in range(T):
-        # mild drift around uniform
-        p = 0.97 * p + 0.03 * rng.dirichlet([1.0] * Nh)
-        p /= p.sum()
-        bo_post[:, t] = p
-    bo_argmax = bo_post.argmax(axis=0)
+    Pb, bib_hands, Nh = _run("bib", "bib")
+    Po, bo_hands, _ = _run("bo", "bo")
+    bib_post = Pb.T; bib_argmax = Pb.argmax(axis=1)
+    bo_post = Po.T; bo_argmax = Po.argmax(axis=1)
 
-    fig, axes = plt.subplots(3, 2, figsize=(13, 9.5),
+    fig, axes = plt.subplots(3, 2, figsize=(7.0, 5.8),
                              constrained_layout=True,
                              gridspec_kw={"height_ratios": [0.55, 1.4, 1.0]})
 
-    def panel_hands(ax, hands, label):
+    def corner(ax, letter):
+        ax.annotate(f"({letter.lower()})", xy=(0, 1), xycoords="axes fraction",
+                    xytext=(-24, 5), textcoords="offset points",
+                    fontsize=11, fontweight="bold", va="bottom", ha="left")
+
+    def panel_hands(ax, hands, letter, title):
         ax.set_xlim(0, T)
         ax.set_ylim(-0.5, 2.5)
         for s, col in sym2col.items():
@@ -926,21 +951,21 @@ def figure2():
             ax.vlines(idx, s - 0.4, s + 0.4, color=col, lw=0.8)
         ax.set_yticks([0, 1, 2])
         ax.set_yticklabels(["R", "P", "S"])
-        ax.set_title(label, loc="left")
         ax.set_xlabel("step $t$")
+        corner(ax, letter)
 
-    def panel_post(ax, post, argmax, label):
+    def panel_post(ax, post, argmax, letter, title):
         im = ax.imshow(post, aspect="auto", origin="lower",
                        cmap="magma", extent=[0, T, -0.5, Nh - 0.5],
                        vmin=0, vmax=min(1.0, post.max() * 1.05))
         ax.plot(np.arange(T), argmax, color="white", lw=1.2)
         ax.set_ylabel("hypothesis $h$")
         ax.set_xlabel("step $t$")
-        ax.set_title(label, loc="left")
         ax.set_yticks([0, 3, 6, 9])
         plt.colorbar(im, ax=ax, fraction=0.04, pad=0.02, label=r"$P(h)$")
+        corner(ax, letter)
 
-    def panel_top3(ax, post, label):
+    def panel_top3(ax, post, letter, title):
         order = np.argsort(-post.mean(axis=1))[:3]
         for rank, h in enumerate(order):
             ax.plot(post[h], lw=1.6, label=f"h={h}")
@@ -950,20 +975,16 @@ def figure2():
         ax.set_xlim(0, T)
         ax.set_xlabel("step $t$")
         ax.set_ylabel(r"$P(h)$")
-        ax.set_title(label, loc="left")
-        ax.legend(loc="upper right", frameon=False, fontsize=7.5, ncol=4)
+        ax.legend(loc="upper right", frameon=False, fontsize=6.5, ncol=4)
+        corner(ax, letter)
 
-    panel_hands(axes[0, 0], bib_hands, "(a) BIB-BIB hand sequence (agent 1)")
-    panel_post(axes[1, 0], bib_post, bib_argmax, "(b) BIB posterior $P(h)$")
-    panel_top3(axes[2, 0], bib_post, "(c) BIB top-3 $P(h)$ trajectories")
+    panel_hands(axes[0, 0], bib_hands, "A", "BIB-BIB hand sequence (agent 1)")
+    panel_post(axes[1, 0], bib_post, bib_argmax, "B", "BIB posterior $P(h)$")
+    panel_top3(axes[2, 0], bib_post, "C", "BIB top-3 $P(h)$ trajectories")
 
-    panel_hands(axes[0, 1], bo_hands, "(d) BO-BO hand sequence (agent 1)")
-    panel_post(axes[1, 1], bo_post, bo_argmax, "(e) BO posterior $P(h)$")
-    panel_top3(axes[2, 1], bo_post, "(f) BO top-3 $P(h)$ trajectories")
-
-    fig.suptitle(
-        "Hypothesis-space dynamics (representative; rs, $N_h=10$, $m=50$, $T=1500$)",
-        fontsize=17, fontweight="bold")
+    panel_hands(axes[0, 1], bo_hands, "D", "BO-BO hand sequence (agent 1)")
+    panel_post(axes[1, 1], bo_post, bo_argmax, "E", "BO posterior $P(h)$")
+    panel_top3(axes[2, 1], bo_post, "F", "BO top-3 $P(h)$ trajectories")
 
     safe_save(fig, "fig_dynamics_demo.png")
 

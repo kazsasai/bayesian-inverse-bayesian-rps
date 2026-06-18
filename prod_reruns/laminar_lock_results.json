@@ -23,8 +23,8 @@
     }
   },
   "taskB": {
-    "core_alpha_mean": 1.3226778218730273,
-    "core_alpha_sd": 0.008296532971111159,
+    "core_alpha_mean": 1.3226778218730255,
+    "core_alpha_sd": 0.008296532971107853,
     "n": 8,
     "invariant": true
   }

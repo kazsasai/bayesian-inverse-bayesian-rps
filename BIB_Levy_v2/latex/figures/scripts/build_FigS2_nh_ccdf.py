@@ -16,6 +16,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["figure.constrained_layout.use"] = True
 import powerlaw
 import warnings
 warnings.simplefilter("ignore")
@@ -91,10 +92,10 @@ def build_cache(budget=36.0):
 def plot(cache):
     plt.rcParams.update({"font.size": 11, "font.family": "sans-serif",
                          "axes.linewidth": 0.8, "pdf.fonttype": 42,
-                         "ps.fonttype": 42, "savefig.bbox": "tight"})
+                         "ps.fonttype": 42})
     cmap = plt.cm.viridis
     ncol = {nh: cmap(i / (len(NHS) - 1)) for i, nh in enumerate(NHS)}
-    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":False,"axes.spines.right":False,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
+    plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.top":True,"ytick.right":True,"xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":True,"axes.spines.right":True,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
     fig, axes = plt.subplots(2, 4, figsize=(7.0, 3.6), sharex=True, sharey=True)
     tags = "abcdefgh"
     for r, pair in enumerate(PAIRS):
@@ -132,9 +133,8 @@ def plot(cache):
     handles = [plt.Line2D([0], [0], color=ncol[nh], lw=2.2) for nh in NHS]
     fig.legend(handles, [fr"$N_h={nh}$" for nh in NHS], loc="lower center",
                ncol=5, frameon=False, fontsize=7.5, bbox_to_anchor=(0.5, -0.04))
-    fig.tight_layout()
-    fig.savefig(OUT_PDF, bbox_inches="tight")
-    fig.savefig(OUT_PNG, dpi=160, bbox_inches="tight")
+    fig.savefig(OUT_PDF)
+    fig.savefig(OUT_PNG, dpi=160)
     print("Saved:", OUT_PDF)
 
 
