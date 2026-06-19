@@ -1,0 +1,5 @@
+scheme,n,winner,decades,alpha_PL,alpha_TPL,gap,PASS
+eq3,176702,truncated_power_law,3.1,1.568,1.417,0.151,True
+caseA,238620,truncated_power_law,3.0,1.584,1.429,0.155,True
+hybrid,261781,truncated_power_law,3.29,1.557,1.441,0.116,True
+defeatGT,451935,truncated_power_law,2.28,2.343,2.307,0.036,True

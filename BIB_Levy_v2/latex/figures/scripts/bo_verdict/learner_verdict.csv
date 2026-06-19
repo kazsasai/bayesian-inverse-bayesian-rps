@@ -1,0 +1,8 @@
+agent,opponent,n,winner,decades,alpha_TPL,gap,PASS
+regretmatching,neutral,22254,truncated_power_law,3.39,1.505,0.055,True
+regretmatching,self_play,37194,lognormal,0.76,0.0,2.995,False
+wsls,neutral,1000000,stretched_exponential,1.08,0.0,2.496,False
+wsls,self_play,1000000,fit_error,0,0,0,False
+qlearning,neutral,1000000,lognormal,1.99,2.392,0.339,False
+qlearning,self_play,1000000,lognormal,2.01,2.935,0.0,False
+bib,self_play,96347,truncated_power_law,3.02,1.441,0.158,True

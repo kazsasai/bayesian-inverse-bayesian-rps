@@ -975,7 +975,9 @@ def figure2():
         ax.set_xlim(0, T)
         ax.set_xlabel("step $t$")
         ax.set_ylabel(r"$P(h)$")
-        ax.legend(loc="upper right", frameon=False, fontsize=6.5, ncol=4)
+        ax.legend(loc="upper right", frameon=False, fontsize=6.5, ncol=2,
+                  handlelength=1.3, columnspacing=1.0, labelspacing=0.3,
+                  borderaxespad=0.3)
         corner(ax, letter)
 
     panel_hands(axes[0, 0], bib_hands, "A", "BIB-BIB hand sequence (agent 1)")

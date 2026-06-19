@@ -1,0 +1,9 @@
+pair,design,observable,runs_valid,runs_pass,pass_rate
+bib-bib,rs,laminar,20,20,1.0
+bib-bib,ra,laminar,20,20,1.0
+bib-bib,ss,laminar,20,20,1.0
+bib-bib,sa,laminar,20,19,0.95
+bo-bo,rs,laminar,20,20,1.0
+bo-bo,ra,laminar,20,17,0.85
+bo-bo,ss,laminar,20,20,1.0
+bo-bo,sa,laminar,20,20,1.0
