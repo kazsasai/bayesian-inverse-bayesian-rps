@@ -34,7 +34,7 @@ plt.rcParams.update({
     "axes.spines.top": True, "axes.spines.right": True, "pdf.fonttype": 42, "ps.fonttype": 42})
 
 
-def panel(ax, getter, xlabel, ylab, ylim):
+def panel(ax, getter, xlabel, ylab, ylim, ref_label):
     # BIB: four designs, red, collapsed
     for i, d in enumerate(DES):
         x, p = ccdf_ds(getter(d, "bib-bib"))
@@ -47,17 +47,18 @@ def panel(ax, getter, xlabel, ylab, ylim):
         pool = np.concatenate([getter(d, "bo-bo") for d in grp])
         x, p = ccdf_ds(pool)
         ax.loglog(x, p, color=col, lw=1.4, ls="--", alpha=0.95, label=lab)
-    # on-off 3/2 reference (CCDF slope -1/2)
+    # 3/2 reference (CCDF slope -1/2); label is context-dependent (neutral in
+    # Sec. III, on-off in the Sec. IV.B reference figure)
     xr = np.logspace(np.log10(4), np.log10(np.max([l.get_xdata().max() for l in ax.lines])), 50)
     yr = 0.55 * (xr / xr[0]) ** (-0.5)
-    ax.loglog(xr, yr, ":", color="0.4", lw=1.3, label=r"on-off $\alpha=3/2$")
+    ax.loglog(xr, yr, ":", color="0.4", lw=1.3, label=ref_label, zorder=0)
     ax.set_xlabel(xlabel); ax.set_ylabel(ylab); ax.set_ylim(*ylim); ax.grid(False)
     ax.legend(loc="lower left", frameon=False, fontsize=6.6)
 
 
-def emit(name, getter, xlabel, ylab, ylim):
+def emit(name, getter, xlabel, ylab, ylim, ref_label):
     fig, ax = plt.subplots(figsize=(3.4, 3.05))
-    panel(ax, getter, xlabel, ylab, ylim)
+    panel(ax, getter, xlabel, ylab, ylim, ref_label)
     out = figdata.FIG_DIR / name
     fig.savefig(out)
     fig.savefig(str(out).replace(".pdf", ".png"), dpi=160)
@@ -65,11 +66,13 @@ def emit(name, getter, xlabel, ylab, ylim):
     print("Saved:", out)
 
 
-# fig_universality.pdf : argmax persistence (Sec. III)
+# fig_universality.pdf : argmax persistence (Sec. III, neutral framing)
 emit("fig_universality.pdf", argmax_durations,
-     r"$T_{\mathrm{argmax}}$ (steps)", r"CCDF $P(T \geq t)$", (1e-6, 1.5))
+     r"$T_{\mathrm{argmax}}$ (steps)", r"CCDF $P(T \geq t)$", (1e-6, 1.5),
+     ref_label=r"$\alpha=3/2$")
 
-# fig_laminar.pdf : laminar phase (Sec. IV.B)
+# fig_laminar.pdf : laminar phase (Sec. IV.B reference figure)
 emit("fig_laminar.pdf", laminar_lengths,
      r"$L_{\mathrm{laminar}}$ (steps, $\max_h P(h)>%.1f$)" % THETA,
-     r"CCDF $P(L \geq t)$", (1e-5, 1.5))
+     r"CCDF $P(L \geq t)$", (1e-5, 1.5),
+     ref_label=r"on-off $\alpha=3/2$")

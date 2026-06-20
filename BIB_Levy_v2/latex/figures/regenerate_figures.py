@@ -969,7 +969,7 @@ def figure2():
         order = np.argsort(-post.mean(axis=1))[:3]
         for rank, h in enumerate(order):
             ax.plot(post[h], lw=1.6, label=f"h={h}")
-        ax.axhline(1.0 / Nh, ls=":", color="grey",
+        ax.axhline(1.0 / Nh, ls=":", color="grey", zorder=0,
                    label=f"$1/N_h={1/Nh:.2f}$")
         ax.set_ylim(0, 1)
         ax.set_xlim(0, T)

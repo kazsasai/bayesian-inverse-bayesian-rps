@@ -85,7 +85,7 @@ for pair, lsty in (("bib-bib", "-"), ("bo-bo", "--")):
         x, p = ccdf_ds(argmax_pool(nh, pair))
         axa.loglog(x, p, color=NHCOL[nh], lw=1.3, ls=lsty, alpha=0.95)
 xr = np.logspace(np.log10(5), np.log10(4e3), 40)
-axa.loglog(xr, 0.5 * (xr / xr[0]) ** -0.5, ":", color="0.4", lw=1.2)
+axa.loglog(xr, 0.5 * (xr / xr[0]) ** -0.5, ":", color="0.4", lw=1.2, zorder=1)
 axa.set_xlabel(r"$T_{\mathrm{argmax}}$ (steps)")
 axa.set_ylabel(r"CCDF $P(T \geq t)$")
 axa.set_ylim(1e-6, 1.5); axa.grid(False)
@@ -103,7 +103,7 @@ for pair, col, lab, beta in (("bib-bib", C_BIB, r"BIB-BIB ($\beta\approx 1.07$)"
                              ("bo-bo", C_BO, r"BO-BO ($\beta\approx 1.28$)", 1.28)):
     sig = [sigma_pooled(nh, pair) for nh in ALLNH]
     axb.loglog(ALLNH, sig, "o-", color=col, lw=1.4, ms=3.4, label=lab)
-xref = np.array([2.5, 22]); axb.loglog(xref, 0.45 * xref ** -1.0, "k--", lw=1.3, label=r"slope $-1$")
+xref = np.array([2.5, 22]); axb.loglog(xref, 0.45 * xref ** -1.0, "k--", lw=1.3, label=r"slope $-1$", zorder=1)
 axb.set_xlabel(r"$N_h$"); axb.set_ylabel(r"$\langle\sigma(\hat{P})\rangle$")
 axb.set_xticks(ALLNH); axb.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 axb.set_ylim(0.016, 0.6); axb.grid(False)

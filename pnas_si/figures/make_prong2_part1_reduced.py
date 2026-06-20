@@ -116,7 +116,7 @@ def main():
         m = c > 0
         axA.loglog(g[m], c[m], color=col, label=f"$d={d:g}$")
     ref = g0[(g0 >= 1) & (g0 <= 3e4)]
-    axA.loglog(ref, 0.9 * ref ** -0.5, "--", color="black", lw=1.1,
+    axA.loglog(ref, 0.9 * ref ** -0.5, "--", color="black", lw=1.1, zorder=0,
                label=r"slope $-1/2$" "\n" r"(pdf $\tau^{-3/2}$)")
     axA.set_xlabel(r"First-return time  $\tau$")
     axA.set_ylabel(r"CCDF  $P(T \geq \tau)$")

@@ -59,7 +59,7 @@ def main():
                       markeredgecolor="black", markeredgewidth=0.3, alpha=0.95,
                       label=fr"{name} ($\alpha$={a:.2f})")
         xr = np.logspace(0.3, np.log10(2e3), 40); yr = 0.6 * (xr / xr[0]) ** (-0.5)
-        ax.loglog(xr, yr, ":", color="0.45", lw=1.4, label=r"on-off ref $\alpha=3/2$")
+        ax.loglog(xr, yr, ":", color="0.45", lw=1.4, label=r"on-off ref $\alpha=3/2$", zorder=0)
         ax.set_xlabel(lab); ax.set_ylim(2e-5, 1.5)
         ax.legend(loc="lower left", frameon=False, fontsize=6.5)
     axA.set_ylabel(r"CCDF $P(T\geq t)$"); axB.set_ylabel(r"CCDF $P(L\geq t)$")

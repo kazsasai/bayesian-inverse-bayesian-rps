@@ -84,13 +84,11 @@ def draw(ax, pair, title, letter):
     x = np.arange(len(DESIGNS))
     nb = len(SCHEMES)
     w = 0.78 / nb
-    ax.axhspan(1.0, 3.0, color="#fff2a8", alpha=0.45, lw=0, zorder=0)  # Levy regime 1<alpha<3
     for k, s in enumerate(SCHEMES):
         vals = [alpha[pair][d].get(s, np.nan) for d in DESIGNS]
         ax.bar(x + (k - (nb - 1) / 2) * w, vals, w,
                color=SCHEME_COLORS[s], edgecolor="black", lw=0.5, label=s)
-    ax.axhline(1.0, ls="--", color="#b8860b", lw=1.0, alpha=0.7)  # exp/Poisson ref
-    ax.axhline(1.5, ls=":", color="0.5", lw=1.0, alpha=0.7)       # on-off 3/2 ref
+    ax.axhline(1.5, ls=":", color="0.5", lw=1.0, alpha=0.7, zorder=0)  # on-off 3/2 ref (behind bars)
     ax.set_xticks(x)
     ax.set_xticklabels(DESIGNS)
     ax.set_ylim(0, 3.1)

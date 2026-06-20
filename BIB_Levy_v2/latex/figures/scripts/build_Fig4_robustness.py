@@ -143,7 +143,7 @@ def plot(cache):
     xr = np.logspace(np.log10(4), np.log10(400), 50)
     yr = y0 * (xr / x0) ** (-(1.43 - 1.0))
     axA.loglog(xr, yr, "--", color="0.25", lw=1.6,
-               label=r"$\alpha=1.43$ reference")
+               label=r"$\alpha=1.43$ reference", zorder=0)
     axA.set_xlabel(r"$T_{\mathrm{argmax}}$ (steps)")
     axA.set_ylabel(r"CCDF $\;P(T \geq t)$")
     axA.set_ylim(1e-6, 1.5)
@@ -168,7 +168,7 @@ def plot(cache):
     xr = np.logspace(np.log10(4), np.log10(400), 50)
     yr = y0 * (xr / x0) ** (-(1.43 - 1.0))
     axB.loglog(xr, yr, ":", color="0.2", lw=1.6,
-               label=r"$\alpha=1.43$ slope")
+               label=r"$\alpha=1.43$ slope", zorder=0)
     axB.set_xlabel(r"$T_{\mathrm{argmax}}$ (steps)")
     axB.set_ylabel(r"CCDF $\;P(T \geq t)$")
     axB.set_ylim(1e-6, 1.5)

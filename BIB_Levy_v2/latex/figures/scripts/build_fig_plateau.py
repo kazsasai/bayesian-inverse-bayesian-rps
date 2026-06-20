@@ -59,7 +59,7 @@ for grp, col, lab in ((("rs", "ra"), C_BO_R, "BO-BO (random init)"),
     ax.loglog(x, p, color=col, lw=1.4, ls="--", label=lab)
 xr = np.logspace(np.log10(3), np.log10(1.0e3), 50)
 yr = 0.5 * (xr / xr[0]) ** (-0.5)
-ax.loglog(xr, yr, ":", color="0.4", lw=1.3, label=r"on-off $\alpha=3/2$")
+ax.loglog(xr, yr, ":", color="0.4", lw=1.3, label=r"on-off $\alpha=3/2$", zorder=0)
 ax.set_xlabel(r"plateau length $T_{\mathrm{pl}}$ (steps)")
 ax.set_ylabel(r"CCDF $P(T_{\mathrm{pl}} \geq t)$")
 ax.set_ylim(1e-5, 1.5)

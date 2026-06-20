@@ -185,7 +185,7 @@ def main():
     wr_vals = [wr for _, wr, _ in summary]
     x = np.arange(len(order))
     axD.bar(x, wr_vals, color=BLUE, edgecolor="black", lw=0.7, width=0.6)
-    axD.axhline(1 / 3, ls="--", color="0.5", lw=1.0)
+    axD.axhline(1 / 3, ls="--", color="0.5", lw=1.0, zorder=0)
     axD.text(len(order) - 0.55, 1 / 3, "1/3 (Nash)", va="bottom", ha="right",
              color="0.4", fontsize=6.5)
     for xi, (d, wr, sz) in enumerate(summary):
