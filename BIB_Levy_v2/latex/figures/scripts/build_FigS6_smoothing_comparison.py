@@ -81,35 +81,27 @@ ALPHA_COND = 1.358
 ALPHA_ALW = 1.257
 
 plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Helvetica","Arial","DejaVu Sans"],"font.size":8,"axes.labelsize":8.5,"xtick.labelsize":7.5,"ytick.labelsize":7.5,"legend.fontsize":6,"axes.linewidth":0.8,"lines.linewidth":1.0,"xtick.direction":"in","ytick.direction":"in","xtick.top":True,"ytick.right":True,"xtick.major.size":3,"ytick.major.size":3,"xtick.minor.size":1.8,"ytick.minor.size":1.8,"axes.spines.top":True,"axes.spines.right":True,"pdf.fonttype":42,"ps.fonttype":42})  # PNAS-unified
-fig, (axA, axB) = plt.subplots(1, 2, figsize=(7.0, 3.05), sharex=True)
+# Merged single panel: both rules overlaid on one axes, so the broad blue
+# (conditional) band vs the tight red (always-on) band shows the ~8-fold
+# sigma collapse directly.
+fig, ax = plt.subplots(figsize=(3.4, 3.0))
 
-def draw(ax, data, color, title, alpha_val, letter):
+def draw(ax, data, color, label):
     m = data.mean(axis=0)
     sd = data.std(axis=0)
-    ax.fill_between(t, m - sd, m + sd, color=color, alpha=0.22, lw=0)
-    ax.plot(t, m, color=color, lw=1.4, label=f"mean over {n_runs} runs")
-    sbar = float(data.mean())
-    ax.set_xlabel("time step")
-    ax.set_ylabel(r"$\sigma(P(h))$")
-    ax.set_xlim(0, T_TOTAL)
-    ax.text(0.97, 0.95,
-            rf"$\bar\sigma = {sbar:.3f}$" + "\n" + rf"$\alpha \approx {alpha_val:.3f}$",
-            transform=ax.transAxes, va="top", ha="right", fontsize=6.5,
-            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="0.6"))
-    ax.legend(loc="upper left", fontsize=6.5, frameon=False)
-    panel_label(ax, letter)
-    return sbar
+    ax.fill_between(t, m - sd, m + sd, color=color, alpha=0.20, lw=0)
+    ax.plot(t, m, color=color, lw=1.5, label=label)
+    return float(data.mean())
 
-s_cond = draw(axA, cond, "#2c5f8a",
-              "Conditional smoothing (triggered)", ALPHA_COND, "a")
-s_alw = draw(axB, alw, "#c0392b",
-             "Always-on JM smoothing", ALPHA_ALW, "b")
-
-# shared y so the >10x collapse is visually unambiguous
+s_cond = draw(ax, cond, "#2c5f8a", r"conditional ($\bar\sigma\approx 0.13$)")
+s_alw  = draw(ax, alw,  "#c0392b", r"always-on ($\bar\sigma\approx 0.015$)")
+ax.set_xlabel("time step")
+ax.set_ylabel(r"$\sigma(P(h))$")
+ax.set_xlim(0, T_TOTAL)
 ymax = max((cond.mean(0) + cond.std(0)).max(),
            (alw.mean(0) + alw.std(0)).max()) * 1.08
-for ax in (axA, axB):
-    ax.set_ylim(0, ymax)
+ax.set_ylim(0, ymax)
+ax.legend(loc="upper right", fontsize=6.8, frameon=False)
 
 fig.savefig(OUT_PDF)
 fig.savefig(OUT_PNG, dpi=200)
