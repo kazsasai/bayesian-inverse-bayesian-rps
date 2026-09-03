@@ -10,7 +10,7 @@ Zenodo DOI `10.5281/zenodo.20533918`.
 
 | # | `\label` | Output file | Build script | Content |
 |---:|---|---|---|---|
-| 1 | `fig:soc-schematic` | `fig_soc_mechanism.pdf` | `pnas/figures/build_Fig1_bc.py` | Schematic of the Bayesian and inverse-Bayesian steps and the resulting power-law persistence. (Also emits `fig1_composite.pdf`.) |
+| 1 | `fig:soc-schematic` | `fig_soc_mechanism.pdf` | hand-drawn schematic (not script-generated) | Schematic of the Bayesian and inverse-Bayesian steps and the resulting power-law persistence. `pnas/figures/build_Fig1_bc.py` *consumes* this file as panel A and emits `fig1_composite.pdf`, which the manuscript does not use. |
 | 2 | `fig:dynamics` | `fig_dynamics_demo.pdf` | `BIB_Levy_v2/latex/figures/regenerate_figures.py 2` | Hypothesis-space dynamics, BIB-BIB vs BO-BO: hand sequence, posterior `P(h)` heatmap with argmax track, and top-3 `P(h)` trajectories. |
 | 3 | `fig:univ` | `fig_universality.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_fig_universality.py` | Design-independent collapse of the BIB argmax-persistence exponent (α≈1.43) and its absence under Bayes-only updating. (Single-panel argmax CCDF; loaders from `build_Fig3_universality.py`.) |
 | 4 | `fig:learners` | `fig_control_ab.pdf` | `pnas_si/figures/build_fig_control.py` | Specificity of the critical class vs adaptive learners (WSLS, Q-learning, regret matching, SIR). |

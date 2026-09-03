@@ -76,15 +76,23 @@ python pnas_si/figures/make_figS_behaviour.py   # rebuilds figS_bib_behaviour + 
 python pnas_si/figures/verify_figS_behaviour_clauset.py   # TPL-vs-EXP, Clauset auto-x_min
 ```
 
-### Figure → script map (selected)
+### Figure → script map
 
 | Figure | Output | Script |
 |---|---|---|
-| Fig 1 | `fig_soc_mechanism.pdf` | `pnas/figures/build_Fig1_bc.py` |
-| Fig 3 | `fig_universality.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig3_universality.py` |
-| Fig 7 | `fig_nh_sweep.pdf` | `BIB_Levy_v2/latex/figures/regenerate_figures.py` |
-| Fig 9 | `fig_mp_generality.pdf` | `pnas/figures/build_FigMP.py` |
-| Fig 12 | `fig_scope.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig_scope_internal_behaviour.py` |
+| Fig 1 | `fig_soc_mechanism.pdf` | hand-drawn schematic (not script-generated) |
+| Fig 2 | `fig_dynamics_demo.pdf` | `BIB_Levy_v2/latex/figures/regenerate_figures.py 2` |
+| Fig 3 | `fig_universality.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_fig_universality.py` |
+| Fig 4 | `fig_control_ab.pdf` | `pnas_si/figures/build_fig_control.py` |
+| Fig 5 | `fig_drift_residual.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_drift_residual.py` |
+| Fig 6 | `fig_nh_sweep.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_fig_nh_sweep.py` |
+| Fig 7 | `fig_bib_vs_bo.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig_bib_vs_bo.py` |
+| Fig 8 | `fig_scope.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig_scope_internal_behaviour.py` |
+| Fig 9 | `figS_bib_behaviour.pdf` | `pnas_si/figures/make_figS_behaviour.py` |
+| Fig 10 | `fig_smoothing.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_FigS6_smoothing_comparison.py` |
+| Fig 11 | `prong2_part1_reduced.pdf` | `pnas_si/figures/make_prong2_part1_reduced.py` |
+| Fig 12 | `fig_robustness.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_Fig4_robustness.py` |
+| Fig 13 | `fig_scheme_ablation.pdf` | `BIB_Levy_v2/latex/figures/scripts/build_FigS7_scheme_ablation.py` |
 
 See `FIGURE_INVENTORY.md` for the full list including SI figures.
 
