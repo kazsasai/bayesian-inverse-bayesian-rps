@@ -13,19 +13,28 @@ snapshot it was run with, so that `cd <folder> && python rpsgame_reward.py grid 
 reproduces that folder's data with no path juggling, and the analysis scripts in
 the folder can simply `from rpsgame_reward import …`. As a result the same file
 name appears in several folders. They are **not all identical** — there are three
-generations plus one exact copy:
+generations plus one bundled copy of the first:
 
 | File | Lines | md5 (head) | What it is |
 |---|---:|---|---|
-| `reward_huge/rpsgame_reward.py` | 1019 | `fd4b6e` | **Production engine, gen-1.** Adds `likelihood_spread()` (posterior-spread σ → β exponent) and `streak_lengths()`; emits `durations_*` and `sigmas_*.json`. Ships the production sweep runners (`run_phase1/2_nh_sweep.sh`, `run_all_huge_v2/v3.sh`). |
-| `analyze_sharpness_plateau/rpsgame_reward.py` | 1019 | `fd4b6e` | **Byte-identical copy of the gen-1 engine** (same md5), bundled so `run_sharpness_plateau.py` and `run_bo_tournament.py` can `import rpsgame_reward` standalone. *Not a different version.* |
-| `reward_huge_v2/rpsgame_reward.py` | 935 | `bb74f3` | **Production engine, gen-2.** Same inference model; `likelihood_spread()` removed (σ not recorded). Produces the reward-tournament tier `reward_huge_v2_<design>` (`rewards_bib-bo_*`). |
-| `_deprecated/reward/rpsgame_reward.py` | 661 | `646723` | **Earliest pilot** (faithful translation of Ibuka & Sasai 2024). No `likelihood_spread`/`streak_lengths`. **Superseded by `reward_huge`; not used for any paper figure or Zenodo dataset.** Kept for lineage under [`_deprecated/`](_deprecated/). |
+| `reward_huge/rpsgame_reward.py` | 1029 | `e8ba81` | **Production engine, gen-1.** Adds `likelihood_spread()` (posterior-spread σ → β exponent) and `streak_lengths()`; emits `durations_*` and `sigmas_*.json`. Ships the production sweep runners (`run_phase1/2_nh_sweep.sh`, `run_all_huge_v2/v3.sh`). |
+| `analyze_sharpness_plateau/rpsgame_reward.py` | 1029 | `e13ac4` | **Bundled copy of the gen-1 engine.** The code below the provenance header is identical to `reward_huge/rpsgame_reward.py`; the two files differ *only* in that header, so their whole-file md5 sums differ. Bundled so `run_sharpness_plateau.py` and `run_bo_tournament.py` can `import rpsgame_reward` standalone. *Not a different version.* |
+| `reward_huge_v2/rpsgame_reward.py` | 942 | `0012d1` | **Production engine, gen-2.** Same inference model; `likelihood_spread()` removed (σ not recorded). Produces the reward-tournament tier `reward_huge_v2_<design>` (`rewards_bib-bo_*`). |
+| `_deprecated/reward/rpsgame_reward.py` | 668 | `b05274` | **Earliest pilot** (faithful translation of Ibuka & Sasai 2024). No `likelihood_spread`/`streak_lengths`. **Superseded by `reward_huge`; not used for any paper figure or Zenodo dataset.** Kept for lineage under [`_deprecated/`](_deprecated/). |
 
 Reproduce the table yourself:
 
 ```bash
 find simulation -name rpsgame_reward.py | xargs md5   # macOS;  md5sum on Linux
+wc -l $(find simulation -name rpsgame_reward.py)
+```
+
+To check the gen-1 claim that the two 1029-line files share the same code, diff
+them: the only hunk is the `PROVENANCE` header block at the top.
+
+```bash
+diff simulation/reward_huge/rpsgame_reward.py \
+     simulation/analyze_sharpness_plateau/rpsgame_reward.py
 ```
 
 ## The distinct engines (different names = different models)

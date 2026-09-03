@@ -1,10 +1,12 @@
 # =============================================================================
 # PROVENANCE  (see ../README.md for the full engine map)
-#   VERSION : byte-identical copy of the gen-1 production engine
-#             1019 lines   |   md5(head) fd4b6e
-#   This is the SAME FILE as simulation/reward_huge/rpsgame_reward.py, bundled
-#   here so run_sharpness_plateau.py and run_bo_tournament.py can
-#   `from rpsgame_reward import ...` standalone. It is NOT a different version.
+#   VERSION : bundled copy of the gen-1 production engine
+#   The code below this header is identical to
+#   simulation/reward_huge/rpsgame_reward.py, which carries a different
+#   provenance block, so the two whole-file md5 sums differ.
+#   It is NOT a different version of the engine.
+#   Bundled here so run_sharpness_plateau.py and run_bo_tournament.py can
+#   `from rpsgame_reward import ...` standalone.
 # =============================================================================
 """
 Reward-based BIB inference for Rock-Paper-Scissors

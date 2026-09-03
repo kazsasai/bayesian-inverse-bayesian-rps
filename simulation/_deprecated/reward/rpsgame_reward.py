@@ -1,6 +1,6 @@
 # =============================================================================
 # PROVENANCE  (see ../README.md for the full engine map)
-#   VERSION : earliest pilot -- DEPRECATED   |   661 lines   |   md5(head) 646723
+#   VERSION : earliest pilot -- DEPRECATED
 #   Faithful first translation of Ibuka & Sasai 2024. Lacks likelihood_spread()
 #   and streak_lengths(). SUPERSEDED by reward_huge/; NOT used for any paper
 #   figure or Zenodo dataset. Kept only for lineage.
