@@ -40,21 +40,15 @@ warnings.filterwarnings("ignore")
 # ---------------------------------------------------------------------------
 # Paths -- auto-detect sandbox vs host
 # ---------------------------------------------------------------------------
-HOST_DATA = Path(
-    "/Users/kazuto/Library/CloudStorage/Dropbox/2026/202600_papers/BIB_Analyze"
-)
-VM_DATA = Path("/sessions/clever-festive-einstein/mnt/BIB_Analyze")
-DATA_ROOT = VM_DATA if VM_DATA.exists() else HOST_DATA
+_HERE = Path(__file__).resolve()
+FIG_DIR = _HERE.parent                      # .../BIB_Levy_v2/latex/figures
+REPO = _HERE.parents[3]                     # figures -> latex -> BIB_Levy_v2 -> <repo>
 
-HOST_FIG = HOST_DATA / "BIB_Levy_v2" / "latex" / "figures"
-VM_FIG = VM_DATA / "BIB_Levy_v2" / "latex" / "figures"
-FIG_DIR = VM_FIG if VM_FIG.exists() else HOST_FIG
-FIG_DIR.mkdir(parents=True, exist_ok=True)
+# Data root: $PAPERA_DATA, else the repo itself (same policy as figdata.py).
+DATA_ROOT = Path(os.environ.get("PAPERA_DATA", REPO))
 
-# Simulator path
-SIM_VM = VM_DATA / "simulation" / "reward_huge_v2"
-SIM_HOST = HOST_DATA / "simulation" / "reward_huge_v2"
-SIM_DIR = SIM_VM if SIM_VM.exists() else SIM_HOST
+# Simulator path: always the version-controlled engine inside the repo.
+SIM_DIR = REPO / "simulation" / "reward_huge_v2"
 sys.path.insert(0, str(SIM_DIR))
 
 from rpsgame_reward import AgentReward, rps  # noqa: E402

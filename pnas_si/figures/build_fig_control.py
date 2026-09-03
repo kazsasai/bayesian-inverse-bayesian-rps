@@ -34,7 +34,7 @@ import powerlaw
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 BIB_DIR = os.path.join(os.environ.get("PAPERA_DATA",
-                       os.path.expanduser("~/paperA_data_full")),
+                       os.path.expanduser("~/BIB_project/data")),
                        "simulation", "reward_huge", "data")
 BASE_NPZ = os.path.join(REPO, "pnas_rl_comparison", "data",
                         "baseline_dwells.npz")

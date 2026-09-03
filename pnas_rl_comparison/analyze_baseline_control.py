@@ -46,7 +46,9 @@ import powerlaw  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DESIGNS = ("rs", "ra", "ss", "sa")
-DEFAULT_BIB = os.path.expanduser("~/paperA_data_full/simulation/reward_huge/data")
+DEFAULT_BIB = os.path.join(os.environ.get("PAPERA_DATA",
+                           os.path.expanduser("~/BIB_project/data")),
+                           "simulation", "reward_huge", "data")
 
 # candidate distributions and their parameter counts (for AIC)
 _CANDS = {"power_law": 1, "exponential": 1, "truncated_power_law": 2,
